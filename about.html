@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — Nguyen Nguyen</title>
+  <title>about. — Nguyen Nguyen</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,109 +11,93 @@
   <nav>
     <a href="index.html" class="nav-name">Nguyen Nguyen</a>
     <ul class="nav-links">
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html" class="active">about</a></li>
+      <li><a href="projects.html">projects</a></li>
+      <li><a href="contact.html">contact</a></li>
     </ul>
   </nav>
 
-  <div class="page-head">
-    <h1 class="page-title">About</h1>
-  </div>
+  <div class="page-wrap">
+    <h1 class="page-title">about.</h1>
 
-  <div class="content">
-    <div class="about-grid">
+    <div class="bio">
 
-      <div>
-        <div class="bio">
-          <p>I work in Notre Dame's chip design group, where I've spent the past two years designing and verifying adiabatic microprocessors. Day-to-day that means writing <strong>UVM testbenches</strong>, building constrained-random verification environments, and occasionally synthesizing standard cells in SkyWater 90nm.</p>
-          <p>Before that I was an <strong>NDNano Research Fellow</strong>, where I built an FPGA test harness for post-silicon validation — wiring everything together end to end, from on-chip BRAM buffers down to PC-side UART parsing.</p>
-          <p>Outside the lab I run design for <em>Strike Magazine</em>, help out with the Chinese Cultural Society, and mentor undergrads through their first IC design projects. On the side I build ML models — most recently a GRU text generator trained on 10,000+ pick-up lines.</p>
-        </div>
+      <img src="photo.jpg" alt="Nguyen Nguyen" class="about-photo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="about-blank" style="display:none;">photo</div>
 
-        <span class="sec-label">Interests</span>
-        <ul class="plain-list">
-          <li>Ultra-low-power and adiabatic integrated circuit design</li>
-          <li>Hardware verification — UVM, constrained-random, coverage-driven</li>
-          <li>Domain-specific architectures for ML and GeMM workloads</li>
-          <li>FPGA prototyping and post-silicon validation</li>
-          <li>Hardware/software co-design for compressed neural networks</li>
-        </ul>
-
-        <span class="sec-label">Education</span>
-        <div class="edu-row">
-          <div>
-            <div class="edu-name">University of Notre Dame</div>
-            <div class="edu-deg">B.S. Electrical Engineering</div>
-          </div>
-          <div class="edu-right">
-            <div class="edu-deg">Notre Dame, IN</div>
-            <div class="edu-meta">GPA 3.623 · May 2026</div>
-          </div>
-        </div>
-
-        <span class="sec-label">Experience</span>
-
-        <div class="exp-item">
-          <div class="exp-date">May 2025 —<br>Present</div>
-          <div>
-            <div class="exp-role">Research Assistant</div>
-            <div class="exp-org">University of Notre Dame</div>
-            <ul class="exp-bullets">
-              <li>UVM verification flow for ultra-low-power adiabatic MIPS processors, with clock-phase-aware BFMs.</li>
-              <li>Constrained-random and self-checking environment achieving >95% functional coverage on adiabatic ALU.</li>
-              <li>Automated regression infrastructure combining LLM-assisted coverpoint generation with Python post-processing.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-date">Aug 2024 —<br>Apr 2025</div>
-          <div>
-            <div class="exp-role">Research Assistant</div>
-            <div class="exp-org">University of Notre Dame</div>
-            <ul class="exp-bullets">
-              <li>Implemented Bennett clocking and split-rail charge recovery into a 16-bit multicycle MIPS design.</li>
-              <li>Designed standard cell library for adiabatic 16-bit MIPS processor in SkyWater 90nm.</li>
-              <li>Scripted LVS batch runs and physical verification fixes with Shell and SKILL.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-date">Jan 2024 —<br>Aug 2024</div>
-          <div>
-            <div class="exp-role">NDNano Undergraduate Research Fellow</div>
-            <div class="exp-org">University of Notre Dame</div>
-            <ul class="exp-bullets">
-              <li>FPGA test harness for post-silicon validation of adiabatic microprocessors.</li>
-              <li>Custom microprocessor-to-PC datapath: on-chip BRAM buffer, UART protocol, PC-side parsing.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-date">Aug 2024 —<br>Present</div>
-          <div>
-            <div class="exp-role">Undergraduate Research Mentor</div>
-            <div class="exp-org">University of Notre Dame</div>
-            <ul class="exp-bullets">
-              <li>Mentored 8+ undergrads across multiple cohorts in digital IC design and verification.</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="sidebar">
-        <div class="sidebar-img">
-          <img src="photo.jpg" alt="Nguyen Nguyen"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-          <div class="sidebar-blank" style="display:none;">photo.jpg</div>
-        </div>
-      </div>
-
+      <p>I work in Notre Dame's chip design group, where I've spent the past two years designing and verifying adiabatic microprocessors. Day-to-day that means writing <strong>UVM testbenches</strong>, building constrained-random verification environments, and synthesizing standard cells in SkyWater 90nm.</p>
+      <p>Before that I was an <strong>NDNano Research Fellow</strong> — built an FPGA test harness for post-silicon validation, wiring everything together from on-chip BRAM buffers down to PC-side UART parsing.</p>
+      <p>Outside the lab I run design for <em>Strike Magazine</em>, help out with the Chinese Cultural Society, and mentor undergrads through their first IC design projects. On the side I build ML models.</p>
     </div>
+
+    <span class="sec-label">interests.</span>
+    <ul class="plain-list">
+      <li>Ultra-low-power and adiabatic integrated circuit design</li>
+      <li>Hardware verification — UVM, constrained-random, coverage-driven</li>
+      <li>Domain-specific architectures for ML and GeMM workloads</li>
+      <li>FPGA prototyping and post-silicon validation</li>
+      <li>Hardware/software co-design for compressed neural networks</li>
+    </ul>
+
+    <span class="sec-label">education.</span>
+    <div class="edu-entry">
+      <div class="edu-name">University of Notre Dame</div>
+      <div class="edu-deg">B.S. Electrical Engineering</div>
+      <div class="edu-meta">Notre Dame, IN &nbsp;·&nbsp; GPA 3.623 &nbsp;·&nbsp; May 2026</div>
+    </div>
+
+    <span class="sec-label">experience.</span>
+
+    <div class="exp-item">
+      <div class="exp-date">May 2025 —<br>present</div>
+      <div>
+        <div class="exp-role">Research Assistant</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>UVM verification flow for ultra-low-power adiabatic MIPS processors, with clock-phase-aware BFMs.</li>
+          <li>Constrained-random and self-checking environment achieving >95% functional coverage on adiabatic ALU.</li>
+          <li>Automated regression infrastructure with LLM-assisted coverpoint generation and Python post-processing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Aug 2024 —<br>Apr 2025</div>
+      <div>
+        <div class="exp-role">Research Assistant</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>Implemented Bennett clocking and split-rail charge recovery into a 16-bit multicycle MIPS design.</li>
+          <li>Designed standard cell library for adiabatic 16-bit MIPS processor in SkyWater 90nm.</li>
+          <li>Scripted LVS batch runs and physical verification fixes with Shell and SKILL.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jan 2024 —<br>Aug 2024</div>
+      <div>
+        <div class="exp-role">NDNano Undergraduate Research Fellow</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>FPGA test harness for post-silicon validation of adiabatic microprocessors.</li>
+          <li>Custom microprocessor-to-PC datapath: on-chip BRAM buffer, UART protocol, PC-side parsing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Aug 2024 —<br>present</div>
+      <div>
+        <div class="exp-role">Undergraduate Research Mentor</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>Mentored 8+ undergrads across multiple cohorts in digital IC design and verification.</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
   <footer>
