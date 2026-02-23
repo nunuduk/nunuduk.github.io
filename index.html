@@ -1,413 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nguyen Nguyen | EE Researcher</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nguyen Nguyen</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <span class="nav-logo">NN</span>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
-    </div>
+  <nav>
+    <a href="index.html" class="nav-name">Nguyen Nguyen</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-content">
-      <div class="hero-photo">
-        <img src="photo.jpg" alt="Nguyen Nguyen" onerror="this.style.display='none';document.getElementById('photo-placeholder').style.display='flex';" />
-        <div id="photo-placeholder" class="photo-placeholder">NN</div>
-      </div>
-      <div class="hero-text">
-        <p class="hero-greeting">Hi, I'm</p>
-        <h1 class="hero-name">Nguyen Nguyen</h1>
-        <p class="hero-title">Electrical Engineering Researcher <span class="accent">@</span> University of Notre Dame</p>
-        <p class="hero-sub">Low-Power IC Design &middot; Hardware Verification &middot; Domain-Specific Architectures</p>
-        <div class="hero-cta">
-          <a href="#contact" class="btn btn-primary">Get in Touch</a>
-          <a href="PhD Resume more ML (6).pdf" target="_blank" class="btn btn-outline">View Resume</a>
-        </div>
+  <div class="home-wrap">
+    <div class="home-text">
+      <h1 class="home-name">Nguyen<br>Nguyen</h1>
+      <p class="home-desc">EE researcher at Notre Dame. Low-power chips, hardware verification, domain-specific architectures. Graduating May 2026.</p>
+      <div class="home-nav">
+        <a href="about.html" class="pill">About</a>
+        <a href="projects.html" class="pill">Projects</a>
+        <a href="PhD Resume more ML (6).pdf" target="_blank" class="pill">Resume ↗</a>
       </div>
     </div>
-    <div class="hero-scroll">
-      <span>scroll down</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-grid">
-        <div class="about-text">
-          <p>
-            I'm an Electrical Engineering student at the <strong>University of Notre Dame</strong> (graduating May 2026)
-            with a GPA of 3.623. My work sits at the intersection of <strong>ultra-low-power integrated circuit design</strong>
-            and <strong>advanced hardware verification</strong>.
-          </p>
-          <p>
-            I've spent the past two years as a research assistant developing UVM verification flows and
-            adiabatic microprocessor designs, and I've had the privilege of presenting my work at NDNano
-            Research Reviews. Outside the lab, I mentor undergrad students in digital IC design and
-            serve as Design Lead for Strike Magazine.
-          </p>
-          <p>
-            When I'm not staring at waveforms or writing testbenches, I'm probably tinkering with ML models —
-            most recently a GRU-based text generator trained on 10,000+ pick-up lines (yes, really).
-          </p>
-          <div class="about-quick">
-            <div class="quick-item"><span class="label">School</span><span>University of Notre Dame</span></div>
-            <div class="quick-item"><span class="label">Degree</span><span>BS Electrical Engineering</span></div>
-            <div class="quick-item"><span class="label">GPA</span><span>3.623</span></div>
-            <div class="quick-item"><span class="label">Graduating</span><span>May 2026</span></div>
-          </div>
-        </div>
-        <div class="about-interests">
-          <h3>Interests</h3>
-          <ul class="interest-list">
-            <li>
-              <span class="interest-icon">&#9889;</span>
-              <div>
-                <strong>Adiabatic &amp; Low-Power Computing</strong>
-                <p>Exploring energy recovery techniques and reversible logic for next-gen processors.</p>
-              </div>
-            </li>
-            <li>
-              <span class="interest-icon">&#128295;</span>
-              <div>
-                <strong>Hardware Verification</strong>
-                <p>Building robust UVM environments with constrained-random and coverage-driven methodologies.</p>
-              </div>
-            </li>
-            <li>
-              <span class="interest-icon">&#127760;</span>
-              <div>
-                <strong>Domain-Specific Architectures</strong>
-                <p>Designing custom accelerators (systolic arrays, GeMM) for energy-efficient ML workloads.</p>
-              </div>
-            </li>
-            <li>
-              <span class="interest-icon">&#129302;</span>
-              <div>
-                <strong>ML &amp; Deep Learning</strong>
-                <p>Applying hardware/software co-design thinking to accelerate neural network inference.</p>
-              </div>
-            </li>
-          </ul>
-        </div>
+    <div class="polaroid-wrap">
+      <div class="polaroid">
+        <img src="photo.jpg" alt="Nguyen Nguyen"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="polaroid-blank" style="display:none;">add photo.jpg</div>
+        <p class="polaroid-caption">Notre Dame, 2025</p>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- RESEARCH INTERESTS -->
-  <section id="research">
-    <div class="container">
-      <h2 class="section-title">Research Interests</h2>
-      <p class="section-sub">My research lies at the intersection of low-power IC design and advanced verification methodologies.</p>
-      <div class="research-grid">
-        <div class="research-card">
-          <div class="card-icon">01</div>
-          <h3>Ultra-Low-Power IC Design</h3>
-          <p>Designing adiabatic and energy-recovering circuits — including standard cell libraries in SkyWater 90nm — that push computation to near-thermodynamic limits.</p>
-        </div>
-        <div class="research-card">
-          <div class="card-icon">02</div>
-          <h3>Advanced Verification</h3>
-          <p>Developing UVM-based verification flows with bus functional models, constrained-randomization, and LLM-assisted coverpoint generation for thorough functional coverage.</p>
-        </div>
-        <div class="research-card">
-          <div class="card-icon">03</div>
-          <h3>Domain-Specific Architectures</h3>
-          <p>Architecting accelerators like adiabatic systolic arrays for GeMM that trade conventional power budgets for specialized, orders-of-magnitude more efficient computation.</p>
-        </div>
-        <div class="research-card">
-          <div class="card-icon">04</div>
-          <h3>FPGA Prototyping &amp; Post-Silicon Validation</h3>
-          <p>Building FPGA test harnesses with custom UART datapaths and on-chip BRAM buffers for validating adiabatic processor designs before and after silicon tapeout.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="container">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <h3 class="skill-category">Verification</h3>
-          <div class="skill-tags">
-            <span>SystemVerilog (OOP)</span>
-            <span>UVM</span>
-            <span>Bus Functional Models</span>
-            <span>Assertions</span>
-            <span>Constrained-Random</span>
-            <span>Coverage</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3 class="skill-category">Front-End Design</h3>
-          <div class="skill-tags">
-            <span>RTL (Verilog)</span>
-            <span>Synthesis</span>
-            <span>STA</span>
-            <span>SystemC</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3 class="skill-category">Back-End Design</h3>
-          <div class="skill-tags">
-            <span>Floorplanning</span>
-            <span>Place &amp; Route</span>
-            <span>CTS</span>
-            <span>DRC</span>
-            <span>LVS</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3 class="skill-category">Scripting &amp; Programming</h3>
-          <div class="skill-tags">
-            <span>Python</span>
-            <span>C/C++</span>
-            <span>Tcl</span>
-            <span>Shell</span>
-            <span>SKILL</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3 class="skill-category">EDA Tools</h3>
-          <div class="skill-tags">
-            <span>Virtuoso</span>
-            <span>XCelium</span>
-            <span>VCS</span>
-            <span>Calibre</span>
-            <span>Innovus</span>
-            <span>Genus</span>
-            <span>Stratus</span>
-            <span>Vivado</span>
-            <span>ModelSim</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3 class="skill-category">PCB &amp; Circuit</h3>
-          <div class="skill-tags">
-            <span>KiCAD</span>
-            <span>Altium</span>
-            <span>LTSpice</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="container">
-      <h2 class="section-title">Experience</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-date">May 2025 – Present</div>
-          <div class="timeline-content">
-            <h3>Research Assistant</h3>
-            <p class="org">University of Notre Dame &mdash; Notre Dame, IN</p>
-            <ul>
-              <li>Developed a UVM verification flow for ultra-low-power adiabatic MIPS processors with clock-phase-aware stimulus generation.</li>
-              <li>Implemented constrained-random &amp; self-checking verification achieving <strong>&gt;95% functional coverage</strong> across key sequences.</li>
-              <li>Built automated verification infrastructure combining LLM-generated coverpoints with Python-based regression testing.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-date">Aug 2024 – Apr 2025</div>
-          <div class="timeline-content">
-            <h3>Research Assistant</h3>
-            <p class="org">University of Notre Dame &mdash; Notre Dame, IN</p>
-            <ul>
-              <li>Implemented reversible computing principles (Bennett clocking, split-rail charge recovery) into 16-bit multicycle MIPS microarchitecture.</li>
-              <li>Designed a standard cell library for an adiabatic 16-bit MIPS processor in <strong>SkyWater 90nm</strong> technology.</li>
-              <li>Performed physical verification at partition level including scripted LVS batch runs.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-date">Jan 2024 – Aug 2024</div>
-          <div class="timeline-content">
-            <h3>NDNano Undergraduate Research Fellow</h3>
-            <p class="org">University of Notre Dame &mdash; Notre Dame, IN</p>
-            <ul>
-              <li>Designed an FPGA test harness proof-of-concept for post-silicon validation of adiabatic microprocessors.</li>
-              <li>Developed a custom microprocessor-to-PC datapath with on-chip BRAM buffer and UART transfer protocol.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-date">Aug 2024 – Present</div>
-          <div class="timeline-content">
-            <h3>Undergraduate Research Mentor</h3>
-            <p class="org">University of Notre Dame &mdash; Notre Dame, IN</p>
-            <ul>
-              <li>Mentored multiple cohorts of 8+ undergrad students in digital IC design.</li>
-              <li>Provided hands-on guidance in design verification, testbench development, and coverage analysis.</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="container">
-      <h2 class="section-title">Projects</h2>
-      <div class="projects-grid">
-
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-tag">Hardware</span>
-            <span class="project-date">May – Aug 2025</span>
-          </div>
-          <h3>Adiabatic GeMM Accelerator</h3>
-          <p>Designed a 4×4 adiabatic systolic-array-based GeMM accelerator in SystemVerilog with Bfloat16 PEs and weight-stationary architecture.</p>
-          <ul class="project-details">
-            <li>Reduces active power dissipation by <strong>several orders of magnitude</strong> vs. conventional designs.</li>
-            <li>Custom adiabatic scratchpad buffer for input timing and results collection under adiabatic timing constraints.</li>
-          </ul>
-          <div class="project-tech">
-            <span>SystemVerilog</span><span>Adiabatic Logic</span><span>Systolic Array</span><span>Bfloat16</span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-tag">Machine Learning</span>
-            <span class="project-date">May – Jul 2023</span>
-          </div>
-          <h3>RNN Pick-up Line Generator</h3>
-          <p>A text-generating recurrent neural network using TensorFlow and a GRU architecture with ~6M parameters, trained on 10,000+ graded pick-up lines.</p>
-          <ul class="project-details">
-            <li>Optimized over <strong>225 epochs</strong> with batch normalization, dropout, and L2 regularization (test loss: 1.7).</li>
-            <li>Trained a companion classification model to score generated outputs by success percentage.</li>
-          </ul>
-          <div class="project-tech">
-            <span>Python</span><span>TensorFlow</span><span>GRU</span><span>NLP</span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-tag">ASIC / Tapeout</span>
-            <span class="project-date">Jan – May 2025</span>
-          </div>
-          <h3>Full-Duplex UART Controller</h3>
-          <p>Proposed, designed, and verified a full-duplex UART controller in SystemC with baud rate control and error detection — completed in 2.5 weeks.</p>
-          <ul class="project-details">
-            <li>Physical design (CTS, P&R) using Cadence Stratus, Genus, and Innovus.</li>
-            <li>Exceeded all instructor PPA requirements; successfully taped out in <strong>TSMC 180nm</strong>.</li>
-          </ul>
-          <div class="project-tech">
-            <span>SystemC</span><span>Cadence Innovus</span><span>TSMC 180nm</span><span>HLS</span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-tag">ASIC / Tapeout</span>
-            <span class="project-date">Aug – Dec 2024</span>
-          </div>
-          <h3>Fan Speed Controller ASIC</h3>
-          <p>Designed a fan speed controller ASIC in Verilog with temperature sensor interface and multi-speed control logic.</p>
-          <ul class="project-details">
-            <li>Synthesized using the eFabless digital chipIgnite flow in <strong>GF180nm</strong> technology.</li>
-            <li>Passed Multi-Project Wafer and Tapeout tests.</li>
-          </ul>
-          <div class="project-tech">
-            <span>Verilog</span><span>eFabless</span><span>GF180nm</span><span>Synthesis</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PUBLICATIONS -->
-  <section id="publications">
-    <div class="container">
-      <h2 class="section-title">Publications</h2>
-      <div class="pub-list">
-        <div class="pub-item">
-          <span class="pub-year">2025</span>
-          <div class="pub-body">
-            <p class="pub-title">"A UVM-Based Verification Approach for Adiabatic Microprocessors"</p>
-            <p class="pub-venue">NDNano Research Reviews &mdash; Notre Dame, IN</p>
-          </div>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2024</span>
-          <div class="pub-body">
-            <p class="pub-title">"An FPGA-Based Test Harness for Post-Silicon Validation of an Adiabatic Microprocessor"</p>
-            <p class="pub-venue">NDNano Research Reviews &mdash; Notre Dame, IN</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="container">
-      <h2 class="section-title">Get in Touch</h2>
-      <p class="section-sub">I'm always open to research collaborations, internship opportunities, or just a good conversation about low-power design.</p>
-      <div class="contact-grid">
-        <a href="mailto:nnguyen4269@gmail.com" class="contact-card">
-          <span class="contact-icon">&#9993;</span>
-          <span class="contact-label">Email</span>
-          <span class="contact-value">nnguyen4269@gmail.com</span>
-        </a>
-        <a href="https://linkedin.com" target="_blank" class="contact-card">
-          <span class="contact-icon">&#128101;</span>
-          <span class="contact-label">LinkedIn</span>
-          <span class="contact-value">linkedin.com/in/nguyennguyen</span>
-        </a>
-        <a href="https://github.com" target="_blank" class="contact-card">
-          <span class="contact-icon">&#128187;</span>
-          <span class="contact-label">GitHub</span>
-          <span class="contact-value">github.com/nguyennguyen</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    <p>Built by Nguyen Nguyen &mdash; <span id="year"></span></p>
+    <span>nnguyen4269@gmail.com</span>
+    <span>© 2025</span>
   </footer>
 
-  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Nguyen Nguyen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-name">Nguyen Nguyen</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrap">
+    <h1 class="page-title">Projects</h1>
+
+    <div class="projects-grid">
+
+      <div class="p-card">
+        <span class="p-tag">hardware · 2025</span>
+        <h3>Adiabatic GeMM Accelerator</h3>
+        <p>4×4 systolic-array-based GeMM accelerator in SystemVerilog with Bfloat16 PEs and weight-stationary architecture. Custom adiabatic scratchpad buffer reduces active power by several orders of magnitude over conventional designs.</p>
+        <div class="p-tech">
+          <span>SystemVerilog</span><span>Adiabatic Logic</span><span>Systolic Array</span><span>Bfloat16</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <span class="p-tag">ASIC · 2025</span>
+        <h3>Full-Duplex UART Controller</h3>
+        <p>Full-duplex UART controller in SystemC with baud rate control and error detection, completed in 2.5 weeks. Physical design in Cadence Stratus/Genus/Innovus — exceeded all PPA targets. Taped out in TSMC 180nm.</p>
+        <div class="p-tech">
+          <span>SystemC</span><span>HLS</span><span>Cadence Innovus</span><span>TSMC 180nm</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <span class="p-tag">ASIC · 2024</span>
+        <h3>Fan Speed Controller ASIC</h3>
+        <p>Fan speed controller in Verilog with temperature sensor interface and multi-speed logic. Synthesized using the eFabless chipIgnite flow in GF180nm technology. Passed MPW and Tapeout tests.</p>
+        <div class="p-tech">
+          <span>Verilog</span><span>eFabless</span><span>GF180nm</span><span>Synthesis</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <span class="p-tag">machine learning · 2023</span>
+        <h3>RNN Pick-up Line Generator</h3>
+        <p>GRU-based text generator in TensorFlow with ~6M parameters, trained on 10,000+ graded pick-up lines. Optimized over 225 epochs with batch norm, dropout, and L2 reg (test loss 1.7). Includes a companion classifier to score outputs.</p>
+        <div class="p-tech">
+          <span>Python</span><span>TensorFlow</span><span>GRU</span><span>NLP</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pubs-wrap">
+      <h2>Publications</h2>
+      <div class="pub-row">
+        <span class="pub-yr">2025</span>
+        <div>
+          <p class="pub-title">"A UVM-Based Verification Approach for Adiabatic Microprocessors"</p>
+          <p class="pub-venue">NDNano Research Reviews — Notre Dame, IN</p>
+        </div>
+      </div>
+      <div class="pub-row">
+        <span class="pub-yr">2024</span>
+        <div>
+          <p class="pub-title">"An FPGA-Based Test Harness for Post-Silicon Validation of an Adiabatic Microprocessor"</p>
+          <p class="pub-venue">NDNano Research Reviews — Notre Dame, IN</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>nnguyen4269@gmail.com</span>
+    <span>© 2025</span>
+  </footer>
+
+</body>
+</html>
