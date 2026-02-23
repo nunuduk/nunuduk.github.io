@@ -17,50 +17,59 @@
     </ul>
   </nav>
 
-  <div class="page-wrap">
+  <div class="page-head">
     <h1 class="page-title">About</h1>
+  </div>
 
-    <div class="about-cols">
+  <div class="content">
+    <div class="about-grid">
 
-      <div class="main-col">
+      <div>
         <div class="bio">
-          <p>I'm an Electrical Engineering student at the <strong>University of Notre Dame</strong>, graduating May 2026. My work sits at the intersection of <strong>ultra-low-power IC design</strong> and <strong>hardware verification</strong> — specifically, I spend most of my time building UVM testbenches and designing adiabatic circuits that recover energy rather than waste it.</p>
-          <p>I've been a research assistant in Notre Dame's chip design group for the past two years, and an <strong>NDNano Undergraduate Research Fellow</strong> before that. I've also mentored several cohorts of undergrads through their first digital IC design projects.</p>
-          <p>Outside the lab, I run the design side of <em>Strike Magazine</em> and help out with the Chinese Cultural Society.</p>
+          <p>I work in Notre Dame's chip design group, where I've spent the past two years designing and verifying adiabatic microprocessors. Day-to-day that means writing <strong>UVM testbenches</strong>, building constrained-random verification environments, and occasionally synthesizing standard cells in SkyWater 90nm.</p>
+          <p>Before that I was an <strong>NDNano Research Fellow</strong>, where I built an FPGA test harness for post-silicon validation — wiring everything together end to end, from on-chip BRAM buffers down to PC-side UART parsing.</p>
+          <p>Outside the lab I run design for <em>Strike Magazine</em>, help out with the Chinese Cultural Society, and mentor undergrads through their first IC design projects. On the side I build ML models — most recently a GRU text generator trained on 10,000+ pick-up lines.</p>
         </div>
 
-        <span class="hand-label">interests</span>
-        <ul class="simple-list">
+        <span class="sec-label">Interests</span>
+        <ul class="plain-list">
           <li>Ultra-low-power and adiabatic integrated circuit design</li>
-          <li>Hardware verification — UVM, constrained-random, coverage-driven methodologies</li>
+          <li>Hardware verification — UVM, constrained-random, coverage-driven</li>
           <li>Domain-specific architectures for ML and GeMM workloads</li>
           <li>FPGA prototyping and post-silicon validation</li>
-          <li>Hardware/software co-design for compressed ML models</li>
+          <li>Hardware/software co-design for compressed neural networks</li>
         </ul>
 
-        <span class="hand-label">education</span>
-        <div class="edu-block">
-          <div class="school">University of Notre Dame</div>
-          <div class="deg">B.S. Electrical Engineering</div>
-          <div class="meta">Notre Dame, IN &nbsp;·&nbsp; GPA 3.623 &nbsp;·&nbsp; May 2026</div>
+        <span class="sec-label">Education</span>
+        <div class="edu-row">
+          <div>
+            <div class="edu-name">University of Notre Dame</div>
+            <div class="edu-deg">B.S. Electrical Engineering</div>
+          </div>
+          <div class="edu-right">
+            <div class="edu-deg">Notre Dame, IN</div>
+            <div class="edu-meta">GPA 3.623 · May 2026</div>
+          </div>
         </div>
 
-        <span class="hand-label">experience</span>
-        <div class="exp-list">
+        <span class="sec-label">Experience</span>
 
-          <div class="exp-item">
-            <div class="exp-date">May 2025 — present</div>
+        <div class="exp-item">
+          <div class="exp-date">May 2025 —<br>Present</div>
+          <div>
             <div class="exp-role">Research Assistant</div>
             <div class="exp-org">University of Notre Dame</div>
             <ul class="exp-bullets">
-              <li>UVM verification flow for ultra-low-power adiabatic MIPS processors, with clock-phase-aware BFMs synced to adiabatic timing.</li>
+              <li>UVM verification flow for ultra-low-power adiabatic MIPS processors, with clock-phase-aware BFMs.</li>
               <li>Constrained-random and self-checking environment achieving >95% functional coverage on adiabatic ALU.</li>
               <li>Automated regression infrastructure combining LLM-assisted coverpoint generation with Python post-processing.</li>
             </ul>
           </div>
+        </div>
 
-          <div class="exp-item">
-            <div class="exp-date">Aug 2024 — Apr 2025</div>
+        <div class="exp-item">
+          <div class="exp-date">Aug 2024 —<br>Apr 2025</div>
+          <div>
             <div class="exp-role">Research Assistant</div>
             <div class="exp-org">University of Notre Dame</div>
             <ul class="exp-bullets">
@@ -69,35 +78,38 @@
               <li>Scripted LVS batch runs and physical verification fixes with Shell and SKILL.</li>
             </ul>
           </div>
+        </div>
 
-          <div class="exp-item">
-            <div class="exp-date">Jan 2024 — Aug 2024</div>
+        <div class="exp-item">
+          <div class="exp-date">Jan 2024 —<br>Aug 2024</div>
+          <div>
             <div class="exp-role">NDNano Undergraduate Research Fellow</div>
             <div class="exp-org">University of Notre Dame</div>
             <ul class="exp-bullets">
               <li>FPGA test harness for post-silicon validation of adiabatic microprocessors.</li>
-              <li>Custom microprocessor-to-PC datapath: on-chip BRAM buffer + UART protocol + PC-side data parsing.</li>
+              <li>Custom microprocessor-to-PC datapath: on-chip BRAM buffer, UART protocol, PC-side parsing.</li>
             </ul>
           </div>
+        </div>
 
-          <div class="exp-item">
-            <div class="exp-date">Aug 2024 — present</div>
+        <div class="exp-item">
+          <div class="exp-date">Aug 2024 —<br>Present</div>
+          <div>
             <div class="exp-role">Undergraduate Research Mentor</div>
             <div class="exp-org">University of Notre Dame</div>
             <ul class="exp-bullets">
-              <li>Mentored 8+ undergrads across multiple cohorts in digital IC design and verification flow.</li>
+              <li>Mentored 8+ undergrads across multiple cohorts in digital IC design and verification.</li>
             </ul>
           </div>
-
         </div>
+
       </div>
 
       <div class="sidebar">
-        <div class="sidebar-polaroid">
+        <div class="sidebar-img">
           <img src="photo.jpg" alt="Nguyen Nguyen"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <div class="sidebar-blank" style="display:none;">photo.jpg</div>
-          <p class="cap">Notre Dame, 2025</p>
         </div>
       </div>
 
