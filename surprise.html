@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surprise. — Nguyen Nguyen</title>
+  <link rel="stylesheet" href="style.css">
+  <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">Nguyen Nguyen</a>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="about.html">about</a></li>
+        <li><a href="projects.html">projects</a></li>
+        <li><a href="gallery.html">gallery</a></li>
+        <li><a href="publications.html">publications</a></li>
+        <li><a href="contact.html">contact</a></li>
+        <li class="nav-gap"></li>
+        <li><a href="resume.html">resume</a></li>
+        <li class="nav-gap"></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+
+    <span class="page-label">you found it.</span>
+
+    <p class="surprise-intro">not everything needs to be professional.</p>
+
+    <p class="surprise-fact" id="fact"></p>
+
+    <div class="surprise-controls">
+      <button class="surprise-btn" onclick="nextFact()">another one →</button>
+      <span class="sep">/</span>
+      <a href="index.html">back home</a>
+    </div>
+
+  </main>
+
+  <script src="theme.js"></script>
+  <script>
+    var facts = [
+      "what do i even put here",
+      "i own exactly zero soldering irons. the lab has one.",
+      "adiabatic means the energy comes back. i wish that worked for sleep.",
+      "banana.",
+      "my research is about making chips cooler. thermally and otherwise.",
+      "the best part of chip design is when nothing is on fire.",
+      "going to michigan. send help. ",
+    ];
+
+    var current = Math.floor(Math.random() * facts.length);
+
+    function nextFact() {
+      current = (current + 1) % facts.length;
+      document.getElementById('fact').textContent = facts[current];
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('fact').textContent = facts[current];
+    });
+  </script>
+
+</body>
+</html>

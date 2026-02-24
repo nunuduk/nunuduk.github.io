@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume. — Nguyen Nguyen</title>
+  <link rel="stylesheet" href="style.css">
+  <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
+  <meta name="description" content="Resume of Nguyen Nguyen — EE researcher, IC designer, VCD student at Notre Dame.">
+  <meta property="og:title" content="Resume — Nguyen Nguyen">
+  <meta property="og:description" content="EE researcher and IC designer. Incoming Ph.D. ECE at University of Michigan.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="mepola.jpeg">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">Nguyen Nguyen</a>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="about.html">about</a></li>
+        <li><a href="projects.html">projects</a></li>
+        <li><a href="gallery.html">gallery</a></li>
+        <li><a href="gallery.html">gallery</a></li>
+        <li><a href="gallery.html">gallery</a></li>
+        <li><a href="publications.html">publications</a></li>
+        <li><a href="contact.html">contact</a></li>
+        <li class="nav-gap"></li>
+        <li><a href="resume.html" class="active">resume</a></li>
+        <li class="nav-gap"></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+
+    <span class="page-label">Resume.</span>
+
+    <div class="resume-content">
+
+      <header class="resume-header">
+        <h1>Nguyen Nguyen</h1>
+        <p class="resume-contact">
+          <a href="mailto:nnguye24@nd.edu">nnguye24@nd.edu</a> ·
+          <a href="https://github.com/nnguye24" target="_blank">github.com/nnguye24</a> ·
+          <a href="https://www.linkedin.com/in/nnguyen24" target="_blank">linkedin.com/in/nnguyen24</a>
+        </p>
+      </header>
+
+      <section class="resume-section">
+        <h2>Education</h2>
+
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">University of Notre Dame</span>
+            <span class="resume-entry-date">May 2026</span>
+          </div>
+          <div class="resume-entry-sub">B.S. Electrical Engineering, GPA: 3.62</div>
+        </div>
+
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">University of Michigan</span>
+            <span class="resume-entry-date">Fall 2026</span>
+          </div>
+          <div class="resume-entry-sub">Ph.D. Electrical & Computer Engineering</div>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h2>Research</h2>
+
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Adiabatic Processor Verification</span>
+            <span class="resume-entry-date">May 2025 — Present</span>
+          </div>
+          <div class="resume-entry-sub">University of Notre Dame · Advisor: Prof. Sharon Hu</div>
+          <ul class="resume-bullets">
+            <li>Built UVM verification environment for ultra-low-power adiabatic MIPS processors with clock-phase-aware BFMs</li>
+            <li>Developed constrained-random and self-checking testbenches achieving >95% functional coverage on adiabatic ALU</li>
+            <li>Automated regression infrastructure with LLM-assisted coverpoint generation and Python post-processing scripts</li>
+          </ul>
+        </div>
+
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Adiabatic Processor Implementation</span>
+            <span class="resume-entry-date">Aug 2024 — Apr 2025</span>
+          </div>
+          <div class="resume-entry-sub">University of Notre Dame · Advisor: Prof. Sharon Hu</div>
+          <ul class="resume-bullets">
+            <li>Implemented Bennett clocking and split-rail charge recovery into a 16-bit multicycle MIPS design</li>
+            <li>Designed standard cell library for adiabatic 16-bit MIPS processor in SkyWater 90nm</li>
+            <li>Scripted LVS batch runs and physical verification fixes with Shell and SKILL</li>
+          </ul>
+        </div>
+
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">FPGA Test Harness for Adiabatic Processors</span>
+            <span class="resume-entry-date">Jan 2024 — Aug 2024</span>
+          </div>
+          <div class="resume-entry-sub">NDNano Undergraduate Research Fellow</div>
+          <ul class="resume-bullets">
+            <li>Developed FPGA test harness for post-silicon validation of adiabatic microprocessors</li>
+            <li>Created custom microprocessor-to-PC datapath: on-chip BRAM buffer, UART protocol, PC-side parsing</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h2>Publications</h2>
+
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">A Verification Framework for Adiabatic Processors</span>
+            <span class="resume-entry-date">2025</span>
+          </div>
+          <div class="resume-entry-sub">N. Nguyen, S. Hu. To appear</div>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h2>Skills</h2>
+        <div class="resume-skills">
+          <div class="resume-skill-group">
+            <strong>Languages:</strong> SystemVerilog, Python, C/C++, MATLAB, Verilog, Perl, Shell, SKILL
+          </div>
+          <div class="resume-skill-group">
+            <strong>Tools:</strong> Cadence (Genus, Innovus, Virtuoso, Spectre), Synopsys (VCS, Verdi, Design Compiler), Altera Quartus, ModelSim, Vivado, LaTeX
+          </div>
+          <div class="resume-skill-group">
+            <strong>Concepts:</strong> UVM, digital IC design, physical design, verification, low-power design, adiabatic circuits, computer architecture
+          </div>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h2>Leadership</h2>
+
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Undergraduate Research Mentor</span>
+            <span class="resume-entry-date">Aug 2024 — Present</span>
+          </div>
+          <div class="resume-entry-sub">University of Notre Dame</div>
+          <ul class="resume-bullets">
+            <li>Mentored 8+ undergraduate students across multiple cohorts in digital IC design and verification</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="theme.js"></script>
+</body>
+</html>

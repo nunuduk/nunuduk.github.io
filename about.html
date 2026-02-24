@@ -3,51 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>about. — Nguyen Nguyen</title>
+  <title>About. — Nguyen Nguyen</title>
   <link rel="stylesheet" href="style.css">
+  <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
+  <meta name="description" content="About Nguyen Nguyen — EE researcher and VCD designer at Notre Dame. Incoming Ph.D. ECE at University of Michigan.">
+  <meta property="og:title" content="About — Nguyen Nguyen">
+  <meta property="og:description" content="EE researcher and VCD designer at Notre Dame. Incoming Ph.D. ECE at University of Michigan.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="mepola.jpeg">
 </head>
 <body>
 
-  <nav>
-    <a href="index.html" class="nav-name">Nguyen Nguyen</a>
-    <ul class="nav-links">
-      <li><a href="about.html" class="active">about</a></li>
-      <li><a href="projects.html">projects</a></li>
-      <li><a href="contact.html">contact</a></li>
-    </ul>
-  </nav>
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">Nguyen Nguyen</a>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="about.html" class="active">about</a></li>
+        <li><a href="projects.html">projects</a></li>
+        <li><a href="gallery.html">gallery</a></li>
+        <li><a href="publications.html">publications</a></li>
+        <li><a href="contact.html">contact</a></li>
+        <li class="nav-gap"></li>
+        <li><a href="resume.html">resume</a></li>
+        <li class="nav-gap"></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
+      </ul>
+    </nav>
+  </aside>
 
-  <div class="page-wrap">
-    <h1 class="page-title">about.</h1>
+  <main>
+
+    <span class="page-label">About.</span>
 
     <div class="bio">
 
-      <img src="photo.jpg" alt="Nguyen Nguyen" class="about-photo"
+      <img src="meconfuse.png" alt="Nguyen Nguyen" class="about-photo"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="about-blank" style="display:none;">photo</div>
 
-      <p>I work in Notre Dame's chip design group, where I've spent the past two years designing and verifying adiabatic microprocessors. Day-to-day that means writing <strong>UVM testbenches</strong>, building constrained-random verification environments, and synthesizing standard cells in SkyWater 90nm.</p>
-      <p>Before that I was an <strong>NDNano Research Fellow</strong> — built an FPGA test harness for post-silicon validation, wiring everything together from on-chip BRAM buffers down to PC-side UART parsing.</p>
-      <p>Outside the lab I run design for <em>Strike Magazine</em>, help out with the Chinese Cultural Society, and mentor undergrads through their first IC design projects. On the side I build ML models.</p>
-    </div>
+      <p></p>
+      <p>I'm an electrical engineering student at the <strong>University of Notre Dame</strong> with a concentration in nanotechnology. I am a computer architecture researcher here at Notre Dame and I'm currently researching the implementation of an adiabatic microprocessor. My main contributions have been in adiabatic verification methodology. Beyond adiabatic circuits, I have great interests in digital accelerators. </p>
 
-    <span class="sec-label">interests.</span>
+      <p>I'm fortunate enough to say I'll be attending the <strong>University of Michigan</strong> ECE Ph.D program this fall. At UMich, I plan to continue research in large scale adiabatic CMOS circuits. Currently, I'm thinking about the adiabatic accelerators. We'll see where this goes in 5-6 years. <strong>Wish me luck!</strong></p>
+
+
+
+      <p>Outside the lab, I'm involved in visual-communication design. I run design for <em>Strike Magazine</em>, help out with the Chinese Cultural Society and Dillon Hall merch, and created a fast-fashion clothing waste awareness campaign. </p>
+
+    </div>
+  <span class="sec-label">My Approach to Chip Design.</span>
+  <div class = "bio">
+    <p><em>"As models scale beyond trillions of parameters, their demands on large-scale datacenters increase, intensifying their environmental impact with upkeep infrastructure serving only as "band-aid" solutions without sustainability in mind. I plan to address this challenge by following a core tenet of design thinking: address the problem at the source. Good design doesn't tell us to make cooler coolers, it tells us to make cooler chips."</em> <br> <strong>- from my Statement of Purpose</strong></p>
+  </div>
+    <span class="sec-label">Interests.</span>
     <ul class="plain-list">
       <li>Ultra-low-power and adiabatic integrated circuit design</li>
-      <li>Hardware verification — UVM, constrained-random, coverage-driven</li>
-      <li>Domain-specific architectures for ML and GeMM workloads</li>
-      <li>FPGA prototyping and post-silicon validation</li>
-      <li>Hardware/software co-design for compressed neural networks</li>
+      <li>Design Verification</li>
+      <li>Domain-Specific Accelerators</li>
+      <li>EDA for Adiabatic Circuits</li>
     </ul>
 
-    <span class="sec-label">education.</span>
+    <span class="sec-label">Education.</span>
     <div class="edu-entry">
       <div class="edu-name">University of Notre Dame</div>
       <div class="edu-deg">B.S. Electrical Engineering</div>
       <div class="edu-meta">Notre Dame, IN &nbsp;·&nbsp; GPA 3.623 &nbsp;·&nbsp; May 2026</div>
     </div>
 
-    <span class="sec-label">experience.</span>
+    <span class="sec-label">Experience.</span>
 
     <div class="exp-item">
       <div class="exp-date">May 2025 —<br>present</div>
@@ -98,12 +121,8 @@
       </div>
     </div>
 
-  </div>
+  </main>
 
-  <footer>
-    <span>nnguyen4269@gmail.com</span>
-    <span>© 2025</span>
-  </footer>
-
+  <script src="theme.js"></script>
 </body>
 </html>

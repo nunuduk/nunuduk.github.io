@@ -3,101 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>projects. — Nguyen Nguyen</title>
+  <title>Projects — Nguyen Nguyen</title>
   <link rel="stylesheet" href="style.css">
+  <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
+  <meta name="description" content="Projects by Nguyen Nguyen — IC design, adiabatic processors, FPGA, and ML.">
+  <meta property="og:title" content="Projects — Nguyen Nguyen">
+  <meta property="og:description" content="IC design, adiabatic processors, FPGA, and ML projects.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="mepola.jpeg">
 </head>
 <body>
 
-  <nav>
-    <a href="index.html" class="nav-name">Nguyen Nguyen</a>
-    <ul class="nav-links">
-      <li><a href="about.html">about</a></li>
-      <li><a href="projects.html" class="active">projects</a></li>
-      <li><a href="contact.html">contact</a></li>
-    </ul>
-  </nav>
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">Nguyen Nguyen</a>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="about.html">about</a></li>
+        <li><a href="projects.html" class="active">projects</a></li>
+        <li><a href="gallery.html">gallery</a></li>
+        <li><a href="publications.html">publications</a></li>
+        <li><a href="contact.html">contact</a></li>
+        <li class="nav-gap"></li>
+        <li><a href="resume.html">resume</a></li>
+        <li class="nav-gap"></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
+      </ul>
+    </nav>
+  </aside>
 
-  <div class="page-wrap">
-    <h1 class="page-title">projects.</h1>
+  <main>
+
+    <span class="page-label">Projects.</span>
 
     <div class="proj-list">
 
       <div class="proj-item">
-        <div class="proj-year">2025</div>
-        <div>
-          <div class="proj-name">Adiabatic GeMM Accelerator</div>
-          <div class="proj-cat">Hardware · SystemVerilog</div>
-          <p class="proj-desc">4×4 systolic-array-based GeMM accelerator with Bfloat16 PEs and weight-stationary architecture. Custom adiabatic scratchpad buffer reduces active power by several orders of magnitude over conventional designs.</p>
-          <div class="proj-tech">
-            <span>SystemVerilog</span><span>Adiabatic Logic</span><span>Systolic Array</span><span>Bfloat16</span>
-          </div>
+        <div class="proj-header">
+          <span class="proj-name">Adiabatic GeMM Accelerator</span>
+          <span class="proj-year">2025</span>
         </div>
+        <p class="proj-desc">4×4 systolic-array-based GeMM accelerator with Bfloat16 PEs and weight-stationary architecture. Custom adiabatic scratchpad buffer reduces active power by several orders of magnitude over conventional designs.</p>
       </div>
 
       <div class="proj-item">
-        <div class="proj-year">2025</div>
-        <div>
-          <div class="proj-name">Full-Duplex UART Controller</div>
-          <div class="proj-cat">ASIC · Tapeout · TSMC 180nm</div>
-          <p class="proj-desc">Designed and verified in SystemC with baud rate control and error detection — completed in 2.5 weeks. Physical design in Cadence Stratus/Genus/Innovus, exceeded all PPA targets. Taped out in TSMC 180nm.</p>
-          <div class="proj-tech">
-            <span>SystemC</span><span>HLS</span><span>Cadence Innovus</span><span>TSMC 180nm</span>
-          </div>
+        <div class="proj-header">
+          <span class="proj-name">Full-Duplex UART Controller</span>
+          <span class="proj-year">2025</span>
         </div>
+        <p class="proj-desc">Designed and verified in SystemC with baud rate control and error detection — completed in 2.5 weeks. Physical design in Cadence Stratus/Genus/Innovus, exceeded all PPA targets. Taped out in TSMC 180nm.</p>
       </div>
 
       <div class="proj-item">
-        <div class="proj-year">2024</div>
-        <div>
-          <div class="proj-name">Fan Speed Controller ASIC</div>
-          <div class="proj-cat">ASIC · Tapeout · GF180nm</div>
-          <p class="proj-desc">Fan speed controller in Verilog with temperature sensor interface and multi-speed control logic. Synthesized using the eFabless chipIgnite flow in GF180nm. Passed Multi-Project Wafer and Tapeout tests.</p>
-          <div class="proj-tech">
-            <span>Verilog</span><span>eFabless</span><span>GF180nm</span><span>Synthesis</span>
-          </div>
+        <div class="proj-header">
+          <span class="proj-name">Fan Speed Controller ASIC</span>
+          <span class="proj-year">2024</span>
         </div>
+        <p class="proj-desc">Fan speed controller in Verilog with temperature sensor interface and multi-speed control logic. Synthesized using the eFabless chipIgnite flow in GF180nm. Passed Multi-Project Wafer and Tapeout tests.</p>
       </div>
 
       <div class="proj-item">
-        <div class="proj-year">2023</div>
-        <div>
-          <div class="proj-name">RNN Pick-up Line Generator</div>
-          <div class="proj-cat">Machine Learning · NLP</div>
-          <p class="proj-desc">GRU-based text generator in TensorFlow with ~6M parameters, trained on 10,000+ graded pick-up lines. Optimized over 225 epochs with batch norm, dropout, and L2 regularization (test loss 1.7). Paired with a classifier that scores outputs.</p>
-          <div class="proj-tech">
-            <span>Python</span><span>TensorFlow</span><span>GRU</span><span>NLP</span>
-          </div>
+        <div class="proj-header">
+          <span class="proj-name">RNN Pick-up Line Generator</span>
+          <span class="proj-year">2023</span>
         </div>
+        <p class="proj-desc">GRU-based text generator in TensorFlow with ~6M parameters, trained on 10,000+ graded pick-up lines. Optimized over 225 epochs with batch norm, dropout, and L2 regularization (test loss 1.7). Paired with a classifier that scores outputs.</p>
       </div>
 
     </div>
 
-    <div class="pub-section">
-      <p class="pub-label">publications.</p>
+  </main>
 
-      <div class="pub-item">
-        <span class="pub-yr">2025</span>
-        <div>
-          <p class="pub-title">"A UVM-Based Verification Approach for Adiabatic Microprocessors"</p>
-          <p class="pub-venue">NDNano Research Reviews — Notre Dame, IN</p>
-        </div>
-      </div>
-
-      <div class="pub-item">
-        <span class="pub-yr">2024</span>
-        <div>
-          <p class="pub-title">"An FPGA-Based Test Harness for Post-Silicon Validation of an Adiabatic Microprocessor"</p>
-          <p class="pub-venue">NDNano Research Reviews — Notre Dame, IN</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <footer>
-    <span>nnguyen4269@gmail.com</span>
-    <span>© 2025</span>
-  </footer>
-
+  <script src="theme.js"></script>
 </body>
 </html>
