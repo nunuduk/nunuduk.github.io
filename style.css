@@ -533,7 +533,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  max-width: 540px;
+  max-width: 1000px;
 }
 
 .gallery-item {
@@ -542,7 +542,7 @@ main {
 }
 
 .gallery-img {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 5 / 7;
   width: 100%;
   object-fit: cover;
   background: var(--surface);
