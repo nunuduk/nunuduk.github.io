@@ -74,7 +74,7 @@
         h: h,
         top: randomIn(-2, 96),
         hue: hue,
-        alpha: Math.round(randomIn(3, 12)) / 100,
+        alpha: Math.round(randomIn(22, 42)) / 100,
         duration: durations[i],
         phaseOffset: Math.round(randomIn(0, 90)),
         fontSize: Math.round(randomIn(42, 58)) / 100,
@@ -120,7 +120,7 @@
               needsSave = true;
             }
             if (p.alpha == null) {
-              p.alpha = Math.round(randomIn(3, 12)) / 100;
+              p.alpha = Math.round(randomIn(22, 42)) / 100;
               needsSave = true;
             }
             if (p.phaseOffset == null) {
@@ -169,7 +169,8 @@
       var span = spans[i];
       if (!span) return;
       var hue = p.hue != null ? p.hue : 270;
-      var alpha = p.alpha != null ? p.alpha : 0.55;
+      var rawAlpha = p.alpha != null ? p.alpha : 0.35;
+      var alpha = Math.max(0.22, Math.min(0.6, rawAlpha));
       var fill = 'hsla(' + hue + ', 80%, 82%, ' + alpha + ')';
       span.style.width = p.w + 'px';
       span.style.height = p.h + 'px';
