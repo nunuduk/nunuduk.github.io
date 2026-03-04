@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nguyen</title>
+  <script>
+    (function () {
+      var path = document.location.pathname;
+      var dir = path.replace(/\/[^/]*$/, '/') || '/';
+      var base = document.createElement('base');
+      base.href = dir;
+      document.head.insertBefore(base, document.head.firstChild);
+    })();
+  </script>
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
@@ -26,7 +35,7 @@
 
   <aside class="sidebar">
     <a href="index.html" class="sidebar-logo">
-      <img src="favicon.png" alt="Nguyen Nguyen">
+      <img src="favicon.png" alt="Nguyen Nguyen" width="150" height="150">
     </a>
     <nav class="sidebar-nav">
       <ul>
@@ -55,7 +64,7 @@
         <div class="home-blank" style="display:none;">photo</div>
 
         <div class="home-lamp">
-          <img src="graphics/lampdrawing.png" alt="ink drawing of a hanging lamp">
+          <img src="graphics/lampdrawing.png" alt="ink drawing of a hanging lamp" width="200" height="250">
         </div>
       </div>
 

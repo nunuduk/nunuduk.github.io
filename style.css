@@ -201,6 +201,8 @@ img { display: block; }
   display: block;
   width: auto;
   height: 150px;
+  max-width: 150px;
+  object-fit: contain;
   margin-left: -4rem; /* move left: use 0 for default, negative (e.g. -1rem) to shift left */
 }
 [data-theme="dark"] .sidebar-logo img {
@@ -342,6 +344,8 @@ main {
 .home-lamp img {
   height: 250px;
   width: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 [data-theme="dark"] .home-lamp img {
