@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About. — Nguyen Nguyen</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
   <meta name="description" content="About Nguyen Nguyen — EE researcher and VCD designer at Notre Dame. Incoming Ph.D. ECE at University of Michigan.">
@@ -14,8 +15,19 @@
 </head>
 <body>
 
+  <div class="floating-deco" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <button class="particle-toggle" type="button" data-particles-toggle>particles on</button>
+
   <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo">Nguyen Nguyen</a>
+    <a href="index.html" class="sidebar-logo">
+      <img src="favicon.png" alt="Nguyen Nguyen">
+    </a>
     <nav class="sidebar-nav">
       <ul>
         <li><a href="about.html" class="active">about</a></li>
@@ -23,8 +35,8 @@
         <li><a href="gallery.html">gallery</a></li>
         <li><a href="publications.html">publications</a></li>
         <li><a href="contact.html">contact</a></li>
-        <li class="nav-gap"></li>
         <li><a href="resume.html">resume</a></li>
+        <li><a href="pomodoro.html">pomodoro</a></li>
         <li class="nav-gap"></li>
         <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
       </ul>
@@ -124,5 +136,9 @@
   </main>
 
   <script src="theme.js"></script>
+  <script src="particles.js"></script>
+  <script src="pomodoro.js"></script>
+  <script src="surprise.js"></script>
+  <script src="spa.js"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nguyen</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
   <meta name="description" content="Nguyen Nguyen — Electrical engineering researcher and VCD designer at Notre Dame. Incoming Ph.D. ECE at University of Michigan.">
@@ -14,8 +15,19 @@
 </head>
 <body>
 
+  <div class="floating-deco" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <button class="particle-toggle" type="button" data-particles-toggle>particles on</button>
+
   <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo">Nguyen Nguyen</a>
+    <a href="index.html" class="sidebar-logo">
+      <img src="favicon.png" alt="Nguyen Nguyen">
+    </a>
     <nav class="sidebar-nav">
       <ul>
         <li><a href="about.html">about</a></li>
@@ -23,8 +35,8 @@
         <li><a href="gallery.html">gallery</a></li>
         <li><a href="publications.html">publications</a></li>
         <li><a href="contact.html">contact</a></li>
-        <li class="nav-gap"></li>
         <li><a href="resume.html">resume</a></li>
+        <li><a href="pomodoro.html">pomodoro</a></li>
         <li class="nav-gap"></li>
         <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
       </ul>
@@ -37,28 +49,40 @@
     <h1 class="home-name">Nguyen Nguyen</h1>
 
     <div class="home-body">
-      <img src="mepola.jpeg" alt="Nguyen Nguyen" class="home-photo"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-      <div class="home-blank" style="display:none;">photo</div>
+      <div class="home-photo-wrap">
+        <img src="mepola.jpeg" alt="Nguyen Nguyen" class="home-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="home-blank" style="display:none;">photo</div>
 
-      <p class="home-desc">
-        Electrical engineering and visual-communication design student at Notre Dame, graduating May 2026.
-        I research ultra-low-power integrated circuit design and hardware
-        verification — building verification infrastructure for adiabatic processors, and exploring
-        domain-specific accelerators for ML. Incoming Ph.D ECE student at the University of Michigan.
-      </p>
-    </div>
+        <div class="home-lamp">
+          <img src="graphics/lampdrawing.png" alt="ink drawing of a hanging lamp">
+        </div>
+      </div>
 
-    <div class="home-links">
-      <a href="surprise.html">surprise me</a>
-      <span class="sep">/</span>
-      <a href="https://github.com/nunuduk" target="_blank" rel="noopener">github</a>
-      <span class="sep">/</span>
-      <a href="https://www.linkedin.com/in/nguyen325/" target="_blank" rel="noopener">linkedin</a>
+      <div class="home-copy">
+        <p class="home-desc">
+          Electrical engineering and visual-communication design student at Notre Dame, graduating May 2026.
+          I research ultra-low-power integrated circuit design and hardware
+          verification — building verification infrastructure for adiabatic processors, and exploring
+          domain-specific accelerators for ML. Incoming Ph.D ECE student at the University of Michigan.
+        </p>
+
+        <div class="home-links">
+          <a href="surprise.html">surprise me</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/nunuduk" target="_blank" rel="noopener">github</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/nguyen325/" target="_blank" rel="noopener">linkedin</a>
+        </div>
+      </div>
     </div>
 
   </main>
 
   <script src="theme.js"></script>
+  <script src="particles.js"></script>
+  <script src="pomodoro.js"></script>
+  <script src="surprise.js"></script>
+  <script src="spa.js"></script>
 </body>
 </html>

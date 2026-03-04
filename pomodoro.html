@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surprise. — Nguyen Nguyen</title>
+  <title>Pomodoro — Nguyen Nguyen</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
+  <meta name="description" content="Pomodoro timer — focus and break cycles.">
 </head>
 <body>
 
@@ -21,8 +22,7 @@
 
   <aside class="sidebar">
     <a href="index.html" class="sidebar-logo">
-      <img src="favicon.png" alt="Nguyen Nguyen" class="logo-light">
-      <img src="logo-dark.png" alt="Nguyen Nguyen dark logo" class="logo-dark">
+      <img src="favicon.png" alt="Nguyen Nguyen">
     </a>
     <nav class="sidebar-nav">
       <ul>
@@ -32,25 +32,40 @@
         <li><a href="publications.html">publications</a></li>
         <li><a href="contact.html">contact</a></li>
         <li><a href="resume.html">resume</a></li>
-        <li><a href="pomodoro.html">pomodoro</a></li>
+        <li><a href="pomodoro.html" class="active">pomodoro</a></li>
         <li class="nav-gap"></li>
         <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
       </ul>
     </nav>
   </aside>
 
-  <main>
+  <main class="pomodoro-page">
 
-    <span class="page-label">you found it.</span>
+    <span class="page-label">focus.</span>
 
-    <p class="surprise-intro">not everything needs to be professional.</p>
+    <p class="pomodoro-phase" id="pomodoro-phase">work</p>
+    <p class="pomodoro-time" id="pomodoro-time">25:00</p>
 
-    <p class="surprise-fact" id="fact"></p>
-
-    <div class="surprise-controls">
-      <button class="surprise-btn" onclick="nextFact()">another one →</button>
+    <div class="pomodoro-controls">
+      <button type="button" class="pomodoro-btn" id="pomodoro-start" onclick="pomodoroStartPause()">start</button>
       <span class="sep">/</span>
-      <a href="index.html">back home</a>
+      <button type="button" class="pomodoro-btn" id="pomodoro-reset" onclick="pomodoroReset()">reset</button>
+      <span class="sep">/</span>
+      <button type="button" class="pomodoro-btn" id="pomodoro-skip" onclick="pomodoroSkip()">skip</button>
+    </div>
+
+    <div class="pomodoro-presets">
+      <span class="pomodoro-presets-label">work</span>
+      <button type="button" class="pomodoro-preset is-active" data-min="25">25 min</button>
+      <button type="button" class="pomodoro-preset" data-min="15">15 min</button>
+      <button type="button" class="pomodoro-preset" data-min="45">45 min</button>
+    </div>
+
+    <div class="pomodoro-presets pomodoro-presets-break">
+      <span class="pomodoro-presets-label">break</span>
+      <button type="button" class="pomodoro-preset pomodoro-preset-break is-active" data-break="5">5 min</button>
+      <button type="button" class="pomodoro-preset pomodoro-preset-break" data-break="10">10 min</button>
+      <button type="button" class="pomodoro-preset pomodoro-preset-break" data-break="15">15 min</button>
     </div>
 
   </main>
@@ -60,6 +75,5 @@
   <script src="pomodoro.js"></script>
   <script src="surprise.js"></script>
   <script src="spa.js"></script>
-
 </body>
 </html>
