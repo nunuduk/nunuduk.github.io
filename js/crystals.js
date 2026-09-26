@@ -52,8 +52,6 @@
     H = window.innerHeight;
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
   }
 
   function target() { return Math.max(8, Math.min(24, Math.round(W * H / 60000))); }

@@ -7,6 +7,8 @@
    */
   var EVERY = 10000;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // only a real pointer pauses it: on a phone a tap leaves :hover stuck on, which would stop the reel
+  var canHover = window.matchMedia('(hover: hover)').matches;
 
   function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
@@ -51,7 +53,7 @@
 
     function next() {
       if (!img.isConnected) return; // the page was swapped out (spa.js); a fresh init takes over
-      if (busy || document.hidden || !onScreen || wrap.matches(':hover')) { schedule(1500); return; }
+      if (busy || document.hidden || !onScreen || (canHover && wrap.matches(':hover'))) { schedule(1500); return; }
       busy = true;
       var k = (i + 1) % (list.length + 1), src = srcAt(k);
       preload(src).then(function () {
@@ -67,16 +69,25 @@
         var run = sweep ? sweep({
           el: wrap, dur: 1100, band: 28, cell: 10, curtain: false, keep: true,
           onMove: function (sx, lean) {
-            over.style.clipPath = 'polygon(0 0, ' + (sx + lean) + 'px 0, ' + sx + 'px 100%, 0 100%)';
+            // the edge trails a little inside the crystal band, so it stays covered even if the band's
+            // canvas shows a frame late (Safari)
+            var x = sx - 10;
+            over.style.clipPath = 'polygon(0 0, ' + (x + lean) + 'px 0, ' + x + 'px 100%, 0 100%)';
           }
         }) : Promise.resolve();
 
         return run.then(function () {
+          over.style.clipPath = 'none'; // fully the new photo, whatever the last frame of the sweep was
           img.setAttribute('src', src);
           i = k;
-          // drop the overlay once the photo underneath has the new picture
-          var done = function () { requestAnimationFrame(function () { over.remove(); }); };
-          if (img.complete) done(); else img.addEventListener('load', done, { once: true });
+          // drop the overlay only once the photo underneath has decoded the new picture, a frame later,
+          // so it can't flash the old one (Safari reports complete before it has repainted)
+          var decoded = img.decode ? img.decode().catch(function () {}) : new Promise(function (res) {
+            if (img.complete) res(); else img.addEventListener('load', res, { once: true });
+          });
+          return decoded.then(function () {
+            requestAnimationFrame(function () { requestAnimationFrame(function () { over.remove(); }); });
+          });
         });
       }).then(function () {
         busy = false;
