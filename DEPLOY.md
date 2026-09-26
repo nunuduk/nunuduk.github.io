@@ -48,14 +48,29 @@ https://<your-username>.github.io/<repo>    # if repo has a different name
 
 ## Step 4: Add Your Photo (Optional)
 
-Drop a file named `photo.jpg` into the `portfolio/` folder. The site will automatically display it in the hero section. Recommended: a square image, at least 400×400px.
+Drop a file named `photo.jpg` into `assets/images/`. The site will automatically display it in the hero section if you wire it in HTML. Recommended: a square image, at least 400×400px.
 
 ```bash
-cp /path/to/your/photo.jpg /path/to/portfolio/photo.jpg
-git add photo.jpg
+cp /path/to/your/photo.jpg /path/to/portfolio/assets/images/photo.jpg
+git add assets/images/photo.jpg
 git commit -m "Add profile photo"
 git push
 ```
+
+---
+
+## Project layout
+
+Static HTML pages stay at the **repository root** (so URLs stay `…/about.html`, etc.). Everything else is grouped:
+
+| Path | Contents |
+|------|----------|
+| `css/` | Stylesheets (`style.css`) |
+| `js/` | Scripts (`sidebar.js`, `theme.js`, `particles.js`, `spa.js`, …) |
+| `assets/fonts/` | Local font files |
+| `assets/images/` | Photos, favicon, gallery images |
+| `assets/graphics/` | Illustrations and decorative PNGs |
+| `inspiration/` | Reference / archived pages (not part of main nav) |
 
 ---
 

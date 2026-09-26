@@ -5,40 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pomodoro — Nguyen Nguyen</title>
   <script>(function(){var p=document.location.pathname;var d=p.replace(/\/[^/]*$/,'/')||'/';var b=document.createElement('base');b.href=d;document.head.insertBefore(b,document.head.firstChild);})();</script>
-  <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
   <meta name="description" content="Pomodoro timer — focus and break cycles.">
 </head>
 <body>
 
-  <div class="floating-deco" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-  </div>
 
-  <button class="particle-toggle" type="button" data-particles-toggle>particles on</button>
-
-  <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo">
-      <img src="favicon.png" alt="Nguyen Nguyen">
-    </a>
-    <nav class="sidebar-nav">
-      <ul>
-        <li><a href="about.html">about</a></li>
-        <li><a href="projects.html">projects</a></li>
-        <li><a href="gallery.html">gallery</a></li>
-        <li><a href="publications.html">publications</a></li>
-        <li><a href="contact.html">contact</a></li>
-        <li><a href="resume.html">resume</a></li>
-        <li><a href="pomodoro.html" class="active">pomodoro</a></li>
-        <li class="nav-gap"></li>
-        <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
-      </ul>
-    </nav>
-  </aside>
+  <div id="sidebar-root"></div>
 
   <main class="pomodoro-page">
 
@@ -71,10 +46,18 @@
 
   </main>
 
-  <script src="theme.js"></script>
-  <script src="particles.js"></script>
-  <script src="pomodoro.js"></script>
-  <script src="surprise.js"></script>
-  <script src="spa.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/crystals.js"></script>
+  <script src="js/pomodoro.js"></script>
+  <script src="js/surprise.js"></script>
+  <script src="js/flappy.js"></script>
+  <script src="js/waveform.js"></script>
+  <script src="js/dither.js"></script>
+  <script src="js/ritsu100.js"></script>
+  <script src="js/holo.js"></script>
+  <script src="js/palette.js"></script>
+  <script src="js/motion.js"></script>
+  <script src="js/spa.js"></script>
 </body>
 </html>

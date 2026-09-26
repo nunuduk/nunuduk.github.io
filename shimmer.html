@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ritsu Shimmer — Nguyen Nguyen</title>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+    #shimmer { display: block; width: 100%; height: 100%; }
+    .back {
+      position: fixed;
+      left: 16px;
+      bottom: 14px;
+      font: 11px/1 'Helvetica Neue', Helvetica, sans-serif;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    .back:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <canvas id="shimmer" role="img" aria-label="The Ritsu Shimmer shader, full screen"></canvas>
+  <a class="back" href="index.html">← back</a>
+
+  <script src="js/holo.js"></script>
+  <script>
+    (function () {
+      var canvas = document.getElementById('shimmer');
+      // the Tesseract settings (21px chips, 22px/s rise, 1080px frame) scaled to this window
+      var opts = {
+        maxDpr: 2,
+        // render at least 2 device pixels per CSS pixel so chip edges stay crisp on any screen
+        supersample: Math.min(2, Math.max(1, 2 / (window.devicePixelRatio || 1)))
+      };
+      function fit() {
+        var k = window.innerHeight / 1080;
+        opts.shard = 21 * k;
+        opts.rise = 22 * k;
+        opts.frame = window.innerHeight;
+      }
+      fit();
+      var holo = window.createHolo(canvas, opts);
+      if (!holo) return;
+      holo.start();
+      var rt;
+      window.addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () { fit(); holo.resize(); }, 150);
+      });
+    })();
+  </script>
+</body>
+</html>

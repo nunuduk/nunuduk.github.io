@@ -3,95 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nguyen</title>
-  <script>
-    (function () {
-      var path = document.location.pathname;
-      var dir = path.replace(/\/[^/]*$/, '/') || '/';
-      var base = document.createElement('base');
-      base.href = dir;
-      document.head.insertBefore(base, document.head.firstChild);
-    })();
-  </script>
-  <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+  <title>Nguyen Nguyen</title>
+  <script>(function(){var p=document.location.pathname;var d=p.replace(/\/[^/]*$/,'/')||'/';var b=document.createElement('base');b.href=d;document.head.insertBefore(b,document.head.firstChild);})();</script>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
-  <meta name="description" content="Nguyen Nguyen — Electrical engineering researcher and VCD designer at Notre Dame. Incoming Ph.D. ECE at University of Michigan.">
+  <script>try{!location.hash&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&document.documentElement.classList.add('m-cover')}catch(e){}</script>
+  <meta name="description" content="Nguyen Nguyen — EE researcher and VCD designer. Ph.D. ECE student at the University of Michigan.">
   <meta property="og:title" content="Nguyen Nguyen">
-  <meta property="og:description" content="Electrical engineering researcher and VCD designer at Notre Dame. Incoming Ph.D. ECE at University of Michigan.">
+  <meta property="og:description" content="EE researcher and VCD designer. Ph.D. ECE student at the University of Michigan.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="mepola.jpeg">
+  <meta property="og:image" content="assets/images/mepola.jpeg">
 </head>
 <body>
 
-  <div class="floating-deco" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-  </div>
 
-  <button class="particle-toggle" type="button" data-particles-toggle>particles on</button>
+  <div id="sidebar-root"></div>
 
-  <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo">
-      <img src="favicon.png" alt="Nguyen Nguyen" width="150" height="150">
-    </a>
-    <nav class="sidebar-nav">
-      <ul>
-        <li><a href="about.html">about</a></li>
-        <li><a href="projects.html">projects</a></li>
-        <li><a href="gallery.html">gallery</a></li>
-        <li><a href="publications.html">publications</a></li>
-        <li><a href="contact.html">contact</a></li>
-        <li><a href="resume.html">resume</a></li>
-        <li><a href="pomodoro.html">pomodoro</a></li>
-        <li class="nav-gap"></li>
-        <li><button class="theme-toggle" onclick="toggleTheme()">dark</button></li>
-      </ul>
-    </nav>
-  </aside>
+  <main class="landing">
 
-  <main>
+    <header class="landing-head">
+      <p class="home-eyebrow">Electrical Engineering + VCD · Notre Dame → Michigan</p>
+      <h1 class="home-name">Nguyen Nguyen</h1>
+    </header>
 
-    <p class="home-eyebrow">Electrical Engineering + VCD · Notre Dame · 2026</p>
-    <h1 class="home-name">Nguyen Nguyen</h1>
+    <section class="landing-section" id="about">
+    <span class="page-label">About.</span>
 
-    <div class="home-body">
-      <div class="home-photo-wrap">
-        <img src="mepola.jpeg" alt="Nguyen Nguyen" class="home-photo"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="home-blank" style="display:none;">photo</div>
+    <div class="about-grid">
+      <div class="about-main">
+        <div class="bio">
+          <p>I'm an electrical engineering student at the <strong>University of Notre Dame</strong> with a concentration in nanotechnology. I am a computer architecture researcher here at Notre Dame and I'm currently researching the implementation of an adiabatic microprocessor. My main contributions have been in adiabatic verification methodology. Beyond adiabatic circuits, I have great interests in digital accelerators. </p>
 
-        <div class="home-lamp">
-          <img src="graphics/lampdrawing.png" alt="ink drawing of a hanging lamp" width="200" height="250">
+          <p>I'm fortunate enough to say I'll be attending the <strong>University of Michigan</strong> ECE Ph.D program this fall. At UMich, I plan to continue research in large scale adiabatic CMOS circuits. Right now at Michigan, I'm working on fast and accurate power feedback through the hardware design flow. We'll see where this goes in 5-6 years. <strong>Wish me luck!</strong></p>
+
+          <p>Outside the lab, I'm involved in visual-communication design. I run design for <em>Strike Magazine</em>, help out with the Chinese Cultural Society and Dillon Hall merch, and created a fast-fashion clothing waste awareness campaign. </p>
         </div>
+
       </div>
 
-      <div class="home-copy">
-        <p class="home-desc">
-          Electrical engineering and visual-communication design student at Notre Dame, graduating May 2026.
-          I research ultra-low-power integrated circuit design and hardware
-          verification — building verification infrastructure for adiabatic processors, and exploring
-          domain-specific accelerators for ML. Incoming Ph.D ECE student at the University of Michigan.
-        </p>
+      <aside class="about-side">
+        <div class="about-photo-wrap">
+        <img src="assets/images/meconfuse.png" data-src-dark="assets/images/mepola.jpeg" alt="Nguyen Nguyen" class="about-photo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="about-blank" style="display:none;">photo</div>
+      </div>
+      </aside>
+    </div>
 
-        <div class="home-links">
-          <a href="surprise.html">surprise me</a>
-          <span class="sep">/</span>
-          <a href="https://github.com/nunuduk" target="_blank" rel="noopener">github</a>
-          <span class="sep">/</span>
-          <a href="https://www.linkedin.com/in/nguyen325/" target="_blank" rel="noopener">linkedin</a>
+    <div class="about-meta">
+      <div>
+        <span class="sec-label">Interests.</span>
+        <ul class="plain-list">
+      <li>Ultra-low-power and adiabatic integrated circuit design</li>
+      <li>Design Verification</li>
+      <li>Domain-Specific Accelerators</li>
+      <li>EDA for Adiabatic Circuits</li>
+    </ul>
+      </div>
+      <div>
+        <span class="sec-label">Education.</span>
+        <div class="edu-entry">
+      <div class="edu-name">University of Notre Dame</div>
+      <div class="edu-deg">B.S. Electrical Engineering</div>
+      <div class="edu-meta">Notre Dame, IN &nbsp;·&nbsp; May 2026</div>
+    </div>
+        <div class="edu-entry">
+          <div class="edu-name">University of Michigan</div>
+          <div class="edu-deg">Ph.D. Electrical &amp; Computer Engineering</div>
+          <div class="edu-meta">Ann Arbor, MI &nbsp;·&nbsp; Fall 2026 —</div>
         </div>
       </div>
     </div>
 
+    <span class="sec-label">Experience.</span>
+    <div class="exp-grid">
+    <div class="exp-item">
+      <div class="exp-date">May 2025 —<br>present</div>
+      <div>
+        <div class="exp-role">Research Assistant</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>UVM verification flow for ultra-low-power adiabatic MIPS processors, with clock-phase-aware BFMs.</li>
+          <li>Constrained-random and self-checking environment achieving >95% functional coverage on adiabatic ALU.</li>
+          <li>Automated regression infrastructure with LLM-assisted coverpoint generation and Python post-processing.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">Aug 2024 —<br>Apr 2025</div>
+      <div>
+        <div class="exp-role">Research Assistant</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>Implemented Bennett clocking and split-rail charge recovery into a 16-bit multicycle MIPS design.</li>
+          <li>Designed standard cell library for adiabatic 16-bit MIPS processor in SkyWater 90nm.</li>
+          <li>Scripted LVS batch runs and physical verification fixes with Shell and SKILL.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">Jan 2024 —<br>Aug 2024</div>
+      <div>
+        <div class="exp-role">NDNano Undergraduate Research Fellow</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>FPGA test harness for post-silicon validation of adiabatic microprocessors.</li>
+          <li>Custom microprocessor-to-PC datapath: on-chip BRAM buffer, UART protocol, PC-side parsing.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">Aug 2024 —<br>present</div>
+      <div>
+        <div class="exp-role">Undergraduate Research Mentor</div>
+        <div class="exp-org">University of Notre Dame</div>
+        <ul class="exp-bullets">
+          <li>Mentored 8+ undergrads across multiple cohorts in digital IC design and verification.</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+    </section>
+
+    <section class="landing-section" id="projects">
+    <span class="page-label">Projects.</span>
+    <div class="proj-list">
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <span class="proj-name">Adiabatic GeMM Accelerator</span>
+          <span class="proj-year">2025</span>
+        </div>
+        <p class="proj-desc">4×4 systolic-array-based GeMM accelerator with Bfloat16 PEs and weight-stationary architecture. Custom adiabatic scratchpad buffer reduces active power by several orders of magnitude over conventional designs.</p>
+      </div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <span class="proj-name">Full-Duplex UART Controller</span>
+          <span class="proj-year">2025</span>
+        </div>
+        <p class="proj-desc">Designed and verified in SystemC with baud rate control and error detection — completed in 2.5 weeks. Physical design in Cadence Stratus/Genus/Innovus, exceeded all PPA targets. Taped out in TSMC 180nm.</p>
+      </div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <span class="proj-name">Fan Speed Controller ASIC</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <p class="proj-desc">Fan speed controller in Verilog with temperature sensor interface and multi-speed control logic. Synthesized using the eFabless chipIgnite flow in GF180nm. Passed Multi-Project Wafer and Tapeout tests.</p>
+      </div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <span class="proj-name">RNN Pick-up Line Generator</span>
+          <span class="proj-year">2023</span>
+        </div>
+        <p class="proj-desc">GRU-based text generator in TensorFlow with ~6M parameters, trained on 10,000+ graded pick-up lines. Optimized over 225 epochs with batch norm, dropout, and L2 regularization (test loss 1.7). Paired with a classifier that scores outputs.</p>
+      </div>
+
+    </div>
+
+  
+    </section>
+
+    <section class="landing-section" id="gallery">
+    <span class="page-label">Gallery.</span>
+    <p class="gallery-note">Visual communication design work. <em>Still filling this in.</em></p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item gallery-item-live gallery-item-wide">
+        <div class="holo-frame">
+          <canvas class="gallery-img" data-holo data-holo-mask="title" data-holo-interactive data-holo-loop="8" data-holo-supersample="1.5" aria-label="The Mob Psycho 100 “100%” title filled with the Ritsu Shimmer shader, rendered live"></canvas>
+        </div>
+        <span class="gallery-live">live</span>
+        <span class="gallery-caption">Ritsu Shimmer · Mob Psycho 100 title, WGSL → WebGL · hover to catch the light</span>
+        <div class="holo-controls" data-holo-controls>
+          <button type="button" class="holo-loop is-on" aria-pressed="true">loop</button>
+          <input type="range" class="holo-scrub" id="holo-scrub" min="0" max="8" step="0.01" value="0" aria-label="Shader time in seconds">
+          <span class="holo-time">0.00s</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/images/BookCover-08.png" alt="VCD Book Cover Project" class="gallery-img">
+        <span class="gallery-caption">VCD Book Cover Project</span>
+      </div>
+      <div class="gallery-item">
+        <img src="assets/images/oldsetup.png" alt="Old Setup" class="gallery-img">
+        <span class="gallery-caption">My Old Setup</span>
+      </div>
+      <div class="gallery-item">
+        <img src="" alt="Project title" class="gallery-img">
+        <span class="gallery-caption">Project title</span>
+      </div>
+      <div class="gallery-item">
+        <img src="" alt="Project title" class="gallery-img">
+        <span class="gallery-caption">Project title</span>
+      </div>
+      <div class="gallery-item">
+        <img src="" alt="Project title" class="gallery-img">
+        <span class="gallery-caption">Project title</span>
+      </div>
+    </div>
+
+  
+    </section>
+
+    <section class="landing-section" id="publications">
+    <span class="page-label">Publications.</span>
+    <div class="pub-section">
+      <span class="pub-label">Presentations</span>
+
+      <div class="pub-item">
+        <span class="pub-yr">2025</span>
+        <div class="pub-title">A Verification Framework for Adiabatic Processors</div>
+        <div class="pub-venue">N. Nguyen</div>
+      </div>
+    </div>
+
+  
+    </section>
+
   </main>
 
-  <script src="theme.js"></script>
-  <script src="particles.js"></script>
-  <script src="pomodoro.js"></script>
-  <script src="surprise.js"></script>
-  <script src="spa.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/crystals.js"></script>
+  <script src="js/pomodoro.js"></script>
+  <script src="js/surprise.js"></script>
+  <script src="js/flappy.js"></script>
+  <script src="js/waveform.js"></script>
+  <script src="js/dither.js"></script>
+  <script src="js/ritsu100.js"></script>
+  <script src="js/holo.js"></script>
+  <script src="js/palette.js"></script>
+  <script src="js/motion.js"></script>
+  <script src="js/spa.js"></script>
 </body>
 </html>

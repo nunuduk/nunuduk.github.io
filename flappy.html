@@ -3,29 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surprise. — Nguyen Nguyen</title>
+  <title>Flappy — Nguyen Nguyen</title>
   <script>(function(){var p=document.location.pathname;var d=p.replace(/\/[^/]*$/,'/')||'/';var b=document.createElement('base');b.href=d;document.head.insertBefore(b,document.head.firstChild);})();</script>
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
   <link rel="stylesheet" href="css/style.css">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
+  <meta name="description" content="A small flappy-style game.">
 </head>
-<body class="page-surprise">
+<body>
 
 
   <div id="sidebar-root"></div>
 
-  <main>
+  <main class="flappy-page">
 
-    <span class="page-label">you found it.</span>
+    <span class="page-label">flappy.</span>
 
-    <p class="surprise-intro">not everything needs to be professional.</p>
+    <p class="flappy-score-wrap">score <span id="flappy-score" class="flappy-score-num">0</span></p>
+    <p class="flappy-hint" id="flappy-hint">click, space, or tap to flap</p>
 
-    <p class="surprise-fact" id="fact"></p>
-
-    <div class="surprise-controls">
-      <button class="surprise-btn" onclick="nextFact()">another one →</button>
-      <span class="sep">/</span>
-      <a href="index.html">back home</a>
+    <div class="flappy-canvas-wrap">
+      <canvas id="flappy-canvas" width="400" height="600" role="img" aria-label="Flappy game"></canvas>
     </div>
 
   </main>
@@ -43,6 +41,5 @@
   <script src="js/palette.js"></script>
   <script src="js/motion.js"></script>
   <script src="js/spa.js"></script>
-
 </body>
 </html>

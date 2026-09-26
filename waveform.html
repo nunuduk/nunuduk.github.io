@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waveform — Nguyen Nguyen</title>
+  <script>(function(){var p=document.location.pathname;var d=p.replace(/\/[^/]*$/,'/')||'/';var b=document.createElement('base');b.href=d;document.head.insertBefore(b,document.head.firstChild);})();</script>
+  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+  <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
+  <meta name="description" content="A timeline, dumped as a waveform.">
+</head>
+<body>
+
+
+  <div id="sidebar-root"></div>
+
+  <main class="waveform-page">
+
+    <span class="page-label">Waveform.</span>
+
+    <p class="wf-intro">VCD means two things to me: visual communication design, and value change dump, the file your simulator writes so you can stare at waveforms at 2am. So here's my timeline as a waveform.</p>
+
+    <div class="wf" id="waveform">
+      <div class="wf-toolbar">
+        <div class="wf-readout">
+          <span><em>cursor</em> <b id="wf-read-cursor">—</b></span>
+          <span><em>marker</em> <b id="wf-read-marker">—</b></span>
+          <span><em>&Delta;</em> <b id="wf-read-delta">—</b></span>
+        </div>
+        <div class="wf-zoom">
+          <button type="button" data-wf="out" aria-label="zoom out">&minus;</button>
+          <button type="button" data-wf="fit">fit</button>
+          <button type="button" data-wf="in" aria-label="zoom in">+</button>
+        </div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-names"></div>
+        <div class="wf-scroll"></div>
+      </div>
+      <div class="wf-bar">
+        <div class="wf-bar-label">overview</div>
+        <div class="wf-track" role="scrollbar" aria-label="Scroll the timeline" aria-orientation="horizontal" tabindex="0">
+          <div class="wf-track-marks"></div>
+          <div class="wf-track-cursor"></div>
+          <div class="wf-track-marker"></div>
+          <div class="wf-thumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="wf-help">hover to probe · click to drop a marker · double-click to clear · ← → step one month · m marks</p>
+
+  </main>
+
+  <script src="js/sidebar.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/crystals.js"></script>
+  <script src="js/pomodoro.js"></script>
+  <script src="js/surprise.js"></script>
+  <script src="js/flappy.js"></script>
+  <script src="js/waveform.js"></script>
+  <script src="js/dither.js"></script>
+  <script src="js/ritsu100.js"></script>
+  <script src="js/holo.js"></script>
+  <script src="js/palette.js"></script>
+  <script src="js/motion.js"></script>
+  <script src="js/spa.js"></script>
+</body>
+</html>
