@@ -194,12 +194,103 @@
     'uniform float uLoop;',    // cycle length in seconds (0 = free-running)
     'uniform float uSpin;',    // record mode: rotation speed in rad/s (0 = off)
     'uniform float uLabel;',   // record mode: centre label radius, as a fraction of the disc radius (0 = none)
+    'uniform sampler2D uGlowTex;', // the mask blurred at a few radii (alpha), for the rim of the glow
+    'uniform sampler2D uRayTex;',  // light shafts baked from the mask (r), see RAY_FRAG
+    'uniform float uGlow;',    // glow strength (0 = none)
+    'uniform sampler2D uEdgeTex;', // per direction from the centre: how far out the letters reach (r, canvas heights)
     'out vec4 outColor;',
     HOLO_LIB,
+    // ── ambient light around the title, drawn like anime compositing: layered brush strokes fanning out
+    // from the letters' edges (a faint haze, a few broad translucent shafts, a scatter of soft tapered
+    // streaks), each its own pastel from the shimmer palette, redrawn on threes like hand-drawn "boil" ──
+    // the shimmer's rainbow position at a point (what colour the letters are there)
+    'float hueAt(vec2 px, float t) {',
+    '  float a = sweepAngle * TAU / 360.0;',
+    '  vec2 pn = px / uFrame;',
+    '  float warp = (vnoise(pn * 1.4 + drift(t, 0.2)) - 0.5) * 0.12;',
+    '  return dot(pn, vec2(cos(a), sin(a))) * bandScale + warp - t * loopRate(sweepSpeed) + sweepPhase + uHueShift;',
+    '}',
+    '',
+    // One family of strokes. The circle of directions is cut into n slots, and each slot may hold one stroke:
+    // u = direction in turns (turned by rot), r = distance from the centre (canvas heights). Each stroke reads
+    // where the letters end and their colour at its own centre line, so it's never cut where those jump.
+    // w/l/o = width, length and opacity ranges; soft = edge feather as a share of the width; even = 0 for a
+    // spindle that tapers at both ends, 1 for an even shaft; dens = chance a slot is filled; boil = drawing.
+    'vec4 strokes(float u, float rot, float r, float n, float seed, vec2 w, vec2 l, vec2 o,',
+    '             float soft, float even, float dens, float boil, float hueShift, float t, float px1) {',
+    '  vec4 acc = vec4(0.0);',
+    '  float x = u * n, slot = floor(x);',
+    '  for (int k = -2; k <= 2; k++) {', // wide strokes near the centre reach past the next slot
+    '    float id = slot + float(k);',
+    '    float s = mod(id, n / 3.0);', // the pattern repeats three times round the circle (see ambience)
+    '    if (hash1(vec2(s, seed)) > dens) continue;',
+    '    float jit = hash1(vec2(s, seed + 11.0 + boil)) - 0.5;', // this drawing\'s wobble
+    '    float c = id + 0.5 + (hash1(vec2(s, seed + 1.7)) - 0.5) * 0.9 + jit * 0.1;',
+    '    float cu = c / n + rot;', // the stroke\'s centre line, in turns
+    '    float rEdge = texture(uEdgeTex, vec2(fract(cu), 0.5)).r;',
+    '    if (rEdge <= 0.0) continue;', // no letters that way
+    '    float len = mix(l.x, l.y, hash1(vec2(s, seed + 3.1)));',
+    '    float r0 = rEdge + mix(-0.45, 0.35, hash1(vec2(s, seed + 5.3))) * len;', // many start behind the letters
+    '    float tt = (r - r0) / len;',
+    '    if (tt <= 0.0 || tt >= 1.0) continue;',
+    '    float body = sin(3.14159 * tt);',
+    '    float width = mix(w.x, w.y, hash1(vec2(s, seed + 7.9))) * (1.0 + 0.2 * jit) * mix(pow(body, 0.8), 1.0, even);',
+    '    float lateral = abs(x - c) / n * TAU * r;', // distance across the stroke, canvas heights
+    '    float edge = max(px1, soft * width);',
+    '    float cov = 1.0 - smoothstep(width - edge, width + edge, lateral);',
+    '    if (cov <= 0.0) continue;',
+    '    float a = mix(o.x, o.y, hash1(vec2(s, seed + 13.0))) * (1.0 + 0.25 * jit) * cov;',
+    '    a *= mix(1.0, 0.35, smoothstep(0.0, 0.4, r - rEdge));', // strongest where it leaves the letters
+    '    a *= mix(pow(body, 0.6), smoothstep(0.0, 0.2, tt) * (1.0 - smoothstep(0.45, 1.0, tt)), even);',
+    '    vec2 cd = vec2(cos(cu * TAU), sin(cu * TAU));',
+    '    float hue = hueAt(uRes * 0.5 + cd * rEdge * uRes.y, t) + hueShift + (hash1(vec2(s, seed + 17.0)) - 0.5) * 0.35;',
+    '    vec3 col = holo(hue);',
+    '    col = mix(vec3(dot(col, vec3(0.299, 0.587, 0.114))), col, 0.75);', // the film\'s light is a little dusty
+    '    col = mix(col, vec3(0.9, 0.94, 1.0), 0.15 + 0.5 * hash1(vec2(s, seed + 19.0)));',
+    '    acc = vec4(col * a, a) + acc * (1.0 - a);', // painted over what\'s below
+    '  }',
+    '  return acc;',
+    '}',
+    '',
+    // everything outside the letters: a faint rim hugging them, then the strokes (premultiplied)
+    'vec4 ambience(vec2 px, float t) {',
+    '  vec2 rel = px - uRes * 0.5;',
+    '  float r = length(rel) / uRes.y;',
+    '  vec2 d = rel / max(length(rel), 1.0);',
+    '  float u = atan(d.y, d.x) / TAU;',
+    '  float aa = 1.0 / uRes.y;',
+    '  float rim = texture(uGlowTex, px / uRes).a * 0.6;',
+    '  vec4 acc = vec4(holo(hueAt(px, t)) * rim, rim);',
+    '  float boil = mod(floor(t * 8.0), 3.0);', // 8 drawings a second, cycling three (on threes)
+    // The strokes turn with the sweep. To loop seamlessly they turn a third of a circle per loop, and the
+    // pattern repeats every third of a circle (slot counts divisible by 3); the letters' outline, colours and
+    // haze don't turn, so the repeat doesn't read.
+    '  float rot = gLoop > 0.0 ? t / (gLoop * 3.0) : t * 0.04;',
+    '  float ur = u - rot;',
+    '  float th = ur * TAU * 3.0;',
+    '  float clump = smoothstep(0.35, 0.7, vnoise(vec2(cos(th), sin(th)) * 1.2 + 5.0));', // streaks gather in a few places
+    '  float haze = texture(uRayTex, px / uRes).r * 0.35;',
+    '  vec4 L = vec4(holo(hueAt(px, t) + 0.05) * haze, haze);',
+    '  vec4 S;',
+    // broad pale shafts, then a scatter of soft streaks
+    '  S = strokes(ur, rot, r, 15.0, 3.0, vec2(0.03, 0.1), vec2(0.4, 0.9), vec2(0.14, 0.38), 0.4, 1.0, 0.6, boil, 0.1, t, aa);',
+    '  L = S + L * (1.0 - S.a);',
+    '  S = strokes(ur, rot, r, 72.0, 21.0, vec2(0.005, 0.014), vec2(0.1, 0.35), vec2(0.15, 0.45), 0.9, 0.0, 0.3 * clump, boil, 0.0, t, aa);',
+    '  L = S + L * (1.0 - S.a);',
+    // fade out before the card's border, so the light never ends in a hard line
+    // (a wide, gentle fade at the sides where there's room; a shorter one above and below the title)
+    '  vec2 e = min(px, uRes - px) / (uRes.y * vec2(0.35, 0.14));',
+    '  vec2 f = smoothstep(0.0, 1.0, clamp(e, 0.0, 1.0));',
+    '  L *= f.x * f.x * f.y;',
+    '  acc = L + acc * (1.0 - L.a);',
+    '  return acc * uGlow;',
+    '}',
     'void main() {',
     '  vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);',
     '  vec4 content = texture(uTex, px / uRes);',
-    '  if (content.a <= 0.0) { outColor = vec4(0.0); return; }',
+    '  gLoop = uLoop;', // makes the shimmer itself periodic (see loop support above)
+    '  vec4 amb = uGlow > 0.0 ? ambience(px, uTime) * (1.0 - content.a) : vec4(0.0);', // letters sit over it
+    '  if (content.a <= 0.0 && amb.a <= 0.002) { outColor = vec4(0.0); return; }',
     // record mode: a pastel purple label with a spindle hole, and the shimmer turning around it
     '  vec2 ctr = uRes * 0.5; vec2 rel = px - ctr;',
     '  float rr = length(rel) / (min(uRes.x, uRes.y) * 0.5);',
@@ -217,9 +308,39 @@
     '    float cs = cos(ang), sn = sin(ang);',
     '    px = ctr + vec2(cs * rel.x - sn * rel.y, sn * rel.x + cs * rel.y);',
     '  }',
-    '  gLoop = uLoop;', // makes the shimmer itself periodic (see loop support above)
+    '  if (content.a <= 0.0) { outColor = amb; return; }',
     '  vec3 col = shimmer(px, uTime, uShard, uRise, uFrame, uHueShift, uLight, uBurst);',
-    '  outColor = vec4(col * content.a, content.a);',
+    '  outColor = vec4(col * content.a, content.a) + amb;',
+    '}'
+  ].join('\n');
+
+  /* Light shafts, baked once per size: from each pixel, walk toward the centre and add up how much of the
+   * (softened) mask lies along the way, weighted by distance. Every edge then throws light straight outward,
+   * fading over uLen, and gaps between the letters leave darker lanes between the beams. Output in r. */
+  var RAY_FRAG = [
+    '#version 300 es',
+    'precision highp float;',
+    'uniform sampler2D uMask;',
+    'uniform vec2 uRes;',     // bake size
+    'uniform float uLen;',    // how far the light carries, as a fraction of the height
+    'uniform float uSoft;',   // mip level of the mask to walk through (softer = broader beams)
+    'out vec4 outColor;',
+    'void main() {',
+    '  vec2 uv = gl_FragCoord.xy / uRes;',
+    '  float asp = uRes.x / uRes.y;',
+    '  vec2 p = vec2(uv.x * asp, uv.y), c = vec2(0.5 * asp, 0.5);', // height units, so beams are straight
+    '  vec2 toC = c - p; float dc = length(toC);',
+    '  vec2 dir = toC / max(dc, 1e-4);',
+    '  float reach = min(dc, 3.0 * uLen);',
+    '  const int N = 64;',
+    '  float j = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));', // dither the steps
+    '  float acc = 0.0;',
+    '  for (int i = 0; i < N; i++) {',
+    '    float x = (float(i) + j) / float(N) * reach;',
+    '    vec2 s = p + dir * x;',
+    '    acc += textureLod(uMask, vec2(s.x / asp, s.y), uSoft).a * exp(-x / uLen);',
+    '  }',
+    '  outColor = vec4(clamp(acc * reach / (float(N) * uLen), 0.0, 1.0), 0.0, 0.0, 1.0);',
     '}'
   ].join('\n');
 
@@ -249,16 +370,22 @@
       }
       return sh;
     }
-    var vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) return null;
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      console.error('[holo]', gl.getProgramInfoLog(prog));
-      return null;
+    function link(fsSrc) {
+      var vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, fsSrc);
+      if (!vs || !fs) return null;
+      var p = gl.createProgram();
+      gl.attachShader(p, vs);
+      gl.attachShader(p, fs);
+      gl.linkProgram(p);
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+        console.error('[holo]', gl.getProgramInfoLog(p));
+        return null;
+      }
+      return p;
     }
+    var prog = link(FRAG);
+    if (!prog) return null;
+    var rayProg = opts.glow ? link(RAY_FRAG) : null;
     gl.useProgram(prog);
 
     var buf = gl.createBuffer();
@@ -280,18 +407,47 @@
       loop: gl.getUniformLocation(prog, 'uLoop'),
       spin: gl.getUniformLocation(prog, 'uSpin'),
       label: gl.getUniformLocation(prog, 'uLabel'),
-      tex: gl.getUniformLocation(prog, 'uTex')
+      tex: gl.getUniformLocation(prog, 'uTex'),
+      glowTex: gl.getUniformLocation(prog, 'uGlowTex'),
+      rayTex: gl.getUniformLocation(prog, 'uRayTex'),
+      glow: gl.getUniformLocation(prog, 'uGlow'),
+      edgeTex: gl.getUniformLocation(prog, 'uEdgeTex')
     };
 
     var tex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    // mipmapped when there's a glow, so the ray bake can walk through a softened copy of the mask
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, rayProg ? gl.LINEAR_MIPMAP_LINEAR : gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.uniform1i(U.tex, 0);
 
+    // the glow's two textures (only filled when opts.glow is set): unit 1 the mask blurred outward (the rim),
+    // unit 2 the baked light shafts
+    function sideTexture(unit) {
+      var t = gl.createTexture();
+      gl.activeTexture(gl.TEXTURE0 + unit);
+      gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(4));
+      gl.activeTexture(gl.TEXTURE0);
+      return t;
+    }
+    var glowTex = sideTexture(1), rayTex = sideTexture(2), edgeTex = sideTexture(3);
+    gl.uniform1i(U.glowTex, 1);
+    gl.uniform1i(U.rayTex, 2);
+    gl.uniform1i(U.edgeTex, 3);
+    gl.activeTexture(gl.TEXTURE3);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT); // directions wrap round the circle
+    gl.activeTexture(gl.TEXTURE0);
+    var rayFbo = rayProg ? gl.createFramebuffer() : null;
+
     var maskCanvas = document.createElement('canvas');
+    var glowCanvas = opts.glow ? document.createElement('canvas') : null;
     var dpr = 1;
 
     function resize() {
@@ -316,6 +472,101 @@
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, maskCanvas);
+      if (glowCanvas) {
+        gl.generateMipmap(gl.TEXTURE_2D);
+        paintGlow(w, h);
+        bakeRays(w, h);
+        traceEdge(w, h);
+      }
+    }
+
+    // For each of 720 directions from the centre, how far out the letters reach (the silhouette's outer
+    // edge), in canvas heights; the strokes start there. Widened by a couple of directions so they start
+    // just outside the letters rather than in the notches.
+    function traceEdge(w, h) {
+      var N = 720, px = maskCanvas.getContext('2d').getImageData(0, 0, w, h).data;
+      var cx = w / 2, cy = h / 2, rMax = Math.hypot(cx, cy), step = Math.max(1, h / 400);
+      var raw = new Float32Array(N), out = new Uint8Array(N * 4);
+      for (var i = 0; i < N; i++) {
+        var a = (i + 0.5) / N * Math.PI * 2, dx = Math.cos(a), dy = Math.sin(a);
+        for (var r = rMax; r > 0; r -= step) {
+          var x = Math.round(cx + dx * r), y = Math.round(cy + dy * r);
+          if (x < 0 || y < 0 || x >= w || y >= h) continue;
+          if (px[(y * w + x) * 4 + 3] > 127) { raw[i] = r / h; break; }
+        }
+      }
+      for (i = 0; i < N; i++) {
+        var m = 0;
+        for (var k = -2; k <= 2; k++) m = Math.max(m, raw[(i + k + N) % N]);
+        out[i * 4] = Math.min(255, Math.round(m * 255));
+      }
+      gl.activeTexture(gl.TEXTURE3);
+      gl.bindTexture(gl.TEXTURE_2D, edgeTex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, N, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, out);
+      gl.activeTexture(gl.TEXTURE0);
+    }
+
+    // render RAY_FRAG into rayTex at half size (the shafts are soft, so that's plenty)
+    function bakeRays(w, h) {
+      var bw = Math.max(1, Math.round(w / 2)), bh = Math.max(1, Math.round(h / 2));
+      gl.activeTexture(gl.TEXTURE2);
+      gl.bindTexture(gl.TEXTURE_2D, rayTex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, bw, bh, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, rayFbo);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, rayTex, 0);
+      gl.viewport(0, 0, bw, bh);
+      gl.useProgram(rayProg);
+      gl.uniform1i(gl.getUniformLocation(rayProg, 'uMask'), 0);
+      gl.uniform2f(gl.getUniformLocation(rayProg, 'uRes'), bw, bh);
+      gl.uniform1f(gl.getUniformLocation(rayProg, 'uLen'), 0.2);
+      // soften the mask to about 1% of the height, whatever the resolution, so beams stay broad
+      gl.uniform1f(gl.getUniformLocation(rayProg, 'uSoft'), Math.max(0, Math.log2(h * 0.012)));
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.useProgram(prog);
+    }
+
+    // The rim of the glow: the mask blurred at two radii and added up, a tight line hugging every edge and a
+    // softer band around it. The shafts (bakeRays) carry the light further out.
+    function paintGlow(w, h) {
+      glowCanvas.width = w;
+      glowCanvas.height = h;
+      var g = glowCanvas.getContext('2d');
+      g.clearRect(0, 0, w, h);
+      g.globalCompositeOperation = 'lighter';
+      [[0.01, 0.6], [0.03, 0.45]].forEach(function (b) {
+        g.globalAlpha = b[1];
+        blurInto(g, maskCanvas, b[0] * h, w, h);
+      });
+      g.globalAlpha = 1;
+      g.globalCompositeOperation = 'source-over';
+      gl.activeTexture(gl.TEXTURE1);
+      gl.bindTexture(gl.TEXTURE_2D, glowTex);
+      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, glowCanvas);
+      gl.activeTexture(gl.TEXTURE0);
+    }
+
+    var tmp = null;
+    function blurInto(ctx, src, r, w, h) {
+      if ('filter' in ctx) {
+        ctx.filter = 'blur(' + r.toFixed(1) + 'px)';
+        ctx.drawImage(src, 0, 0);
+        ctx.filter = 'none';
+        return;
+      }
+      // no canvas filters (older Safari): shrink and stretch back, which smooths about as much
+      tmp = tmp || document.createElement('canvas');
+      var k = Math.max(1, r / 1.5);
+      tmp.width = Math.max(1, Math.round(w / k));
+      tmp.height = Math.max(1, Math.round(h / k));
+      var t = tmp.getContext('2d');
+      t.imageSmoothingQuality = 'high';
+      t.clearRect(0, 0, tmp.width, tmp.height);
+      t.drawImage(src, 0, 0, tmp.width, tmp.height);
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(tmp, 0, 0, w, h);
     }
 
     var running = false, raf = 0, t0 = performance.now(), tOffset = opts.timeOffset || 0;
@@ -345,6 +596,7 @@
       gl.uniform1f(U.loop, loopLen);
       gl.uniform1f(U.spin, (opts.spinRpm || 0) * Math.PI * 2 / 60);
       gl.uniform1f(U.label, opts.label || 0);
+      gl.uniform1f(U.glow, opts.glow || 0);
       gl.uniform2f(U.res, canvas.width, canvas.height);
       gl.uniform1f(U.time, t);
       gl.uniform1f(U.shard, opts.shard * dpr);
@@ -399,15 +651,16 @@
    *    data-holo-frame="px band height" data-holo-supersample="1.5"> ── */
 
   /* the Mob Psycho 100 "100%" title, from the traced glyphs in js/ritsu100.js */
-  // largest scale at which the title fits the canvas with some breathing room (CSS px per source px)
-  function titleFit(w, h) {
+  // largest scale at which the title fits with some breathing room (CSS px per source px);
+  // fill = share of the height it may take (smaller leaves room for the glow around it)
+  function titleFit(w, h, fill) {
     var T = window.RITSU_100;
-    return Math.min(w * 0.84 / T.width, h * 0.8 / T.height);
+    return Math.min(w * 0.84 / T.width, h * (fill || 0.8) / T.height);
   }
 
-  function titleMask(ctx, w, h) {
+  function titleMask(ctx, w, h, fill) {
     var T = window.RITSU_100;
-    var s = titleFit(w, h);
+    var s = titleFit(w, h, fill);
     var ox = (w - T.width * s) / 2, oy = (h - T.height * s) / 2;
     ctx.fillStyle = '#fff';
     T.polys.forEach(function (poly) {
@@ -432,13 +685,15 @@
   function makeTile(canvas) {
     var isTitle = canvas.dataset.holoMask === 'title' && window.RITSU_100;
     var opts = {
-      mask: isTitle ? titleMask : null,
+      mask: isTitle ? function (ctx, w, h) { titleMask(ctx, w, h, opts.fill); } : null,
       shard: parseFloat(canvas.dataset.holoShard) || 11,
       rise: parseFloat(canvas.dataset.holoRise) || 14,
       frame: parseFloat(canvas.dataset.holoFrame) || 0,
       supersample: parseFloat(canvas.dataset.holoSupersample) || 1,
       loop: parseFloat(canvas.dataset.holoLoop) || 0,
       spinRpm: parseFloat(canvas.dataset.holoSpin) || 0,    // record mode (the logo)
+      glow: parseFloat(canvas.dataset.holoGlow) || 0,       // ambient halo around the mask's edges
+      fill: parseFloat(canvas.dataset.holoFill) || 0.8,     // title: share of the height it fills
       label: parseFloat(canvas.dataset.holoLabel) || 0,
       maxDpr: 2,
       timeOffset: 3
@@ -450,7 +705,7 @@
     // the title is drawn, so it looks like the render at a smaller size.
     function fitTitle() {
       if (!isTitle) return;
-      var s = titleFit(canvas.clientWidth, canvas.clientHeight);
+      var s = titleFit(canvas.clientWidth, canvas.clientHeight, opts.fill);
       opts.shard = 21 * s;
       opts.rise = 22 * s;
       opts.frame = window.RITSU_100.frameHeight * s;

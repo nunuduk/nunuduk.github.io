@@ -905,7 +905,7 @@ main {
 .gallery-item-live:hover .gallery-img { transform: none; }
 /* the 100% title is a wide card across the whole row, like the show's title frame */
 .gallery-item-wide { grid-column: 1 / -1; }
-.gallery-item-wide .gallery-img { aspect-ratio: 16 / 7; }
+.gallery-item-wide .gallery-img { aspect-ratio: 16 / 9; }
 
 /* scrubber under the 100% title: loop toggle, time slider, readout */
 .holo-controls {
