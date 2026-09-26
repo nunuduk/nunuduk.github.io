@@ -15,7 +15,7 @@
     '<circle class="pl-knob" cx="78" cy="80" r="7"/>' +
     '<circle class="pl-led" cx="58" cy="86" r="2.2"/>' +
     '</svg>' +
-    '<canvas class="sidebar-holo" data-holo data-holo-shard="8" data-holo-rise="12" data-holo-frame="300" data-holo-supersample="2" data-holo-spin="6" data-holo-label="0.46" aria-hidden="true"></canvas>' +
+    '<canvas class="sidebar-holo" data-holo data-holo-shard="8" data-holo-rise="12" data-holo-frame="300" data-holo-supersample="2" data-holo-spin="6" data-holo-label="0.46" data-holo-ref-rem="8.8" aria-hidden="true"></canvas>' +
     // the name, curved around the inside edge of the label, turning with the record
     '<svg class="record-label" viewBox="-75 -75 150 150" aria-hidden="true">' +
     '<defs><path id="record-arc" d="M 0,-24.5 A 24.5,24.5 0 1,1 -0.01,-24.5"/></defs>' +

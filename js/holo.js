@@ -703,8 +703,20 @@
     if (controls) opts.onTime = function (t) { if (controls.__sync) controls.__sync(t); };
     // For the title, scale the Tesseract settings (21px chips, 22px/s rise, 1080px frame) by how big
     // the title is drawn, so it looks like the render at a smaller size.
+    // data-holo-ref-rem: the size (rem) the shard/rise/frame values were tuned at. Drawn smaller (the logo
+    // on a phone), they shrink with it, so it looks like the same record scaled down, not a close-up crop.
+    var base = { shard: opts.shard, rise: opts.rise, frame: opts.frame };
+    var refRem = parseFloat(canvas.dataset.holoRefRem) || 0;
     function fitTitle() {
-      if (!isTitle) return;
+      if (!isTitle) {
+        if (!refRem || !canvas.clientWidth) return;
+        var rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        var k = canvas.clientWidth / (refRem * rem);
+        opts.shard = base.shard * k;
+        opts.rise = base.rise * k;
+        opts.frame = base.frame * k;
+        return;
+      }
       var s = titleFit(canvas.clientWidth, canvas.clientHeight, opts.fill);
       opts.shard = 21 * s;
       opts.rise = 22 * s;
