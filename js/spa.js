@@ -88,6 +88,7 @@
     }
     if (last === 'index.html') {
       if (typeof window.initDither === 'function') window.initDither();
+      if (typeof window.initPhotoReel === 'function') window.initPhotoReel();
       if (typeof window.initHolo === 'function') window.initHolo();
     }
   }

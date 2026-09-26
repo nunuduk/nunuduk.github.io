@@ -589,6 +589,9 @@
   /* ── the crystal line as an entrance ──
    * sweepReveal({ el, dur, band, cell }) covers `el` (or the whole screen) in its background colour and
    * sweeps the crystal band left to right across it, revealing what's underneath. Resolves when done.
+   * Options for a swap instead (the about photo): curtain: false leaves what's ahead of the line visible,
+   * onMove(sx, lean) reports where the line is each frame (its bottom x and lean, css px of `el`), and
+   * keep: true holds on to the shader for next time (it's slow to compile).
    */
   function bgColour(el) {
     var c = getComputedStyle(el).backgroundColor;
@@ -604,13 +607,16 @@
     o = o || {};
     if (reduce || document.hidden || !window.HOLO_LIB) return Promise.resolve();
     var el = o.el || null;
-    var c, P, own = !!el;
-    if (el) {
+    var c, P, own = !!el && !o.keep;
+    if (el && el.__sweepFx) {
+      c = el.__sweepFx.c; P = el.__sweepFx.P; P.size();
+    } else if (el) {
       c = document.createElement('canvas');
       c.className = 'm-sweep-local';
       P = glPass(c, LINE_MAIN, BASE_UNIFORMS.concat(LINE_UNIFORMS), 2, function () {
         return { w: el.clientWidth, h: el.clientHeight };
       });
+      if (P && o.keep) el.__sweepFx = { c: c, P: P };
     } else {
       var fx = getLineFx();
       if (fx) { c = fx.c; P = fx.P; P.size(); }
@@ -624,13 +630,14 @@
     var bg = bgColour(el || document.body);
     P.gl.uniform1f(P.U.uBand, band * P.dpr);
     P.gl.uniform1f(P.U.uCell, (o.cell || 26) * P.dpr);
-    P.gl.uniform4f(P.U.uCurtain, bg[0], bg[1], bg[2], 1);
+    P.gl.uniform4f(P.U.uCurtain, bg[0], bg[1], bg[2], o.curtain === false ? 0 : 1);
 
     var t0 = performance.now();
     function place(sx, now) {
       P.gl.uniform1f(P.U.uTime, (now - t0) / 1000 + 4);
       P.gl.uniform2f(P.U.uLine, sx * P.dpr, lean * P.dpr);
       P.draw();
+      if (o.onMove) o.onMove(sx, lean);
     }
     place(from, t0);
     (el || document.body).appendChild(c);

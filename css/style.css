@@ -349,6 +349,7 @@ main {
 }
 
 .about-photo {
+  display: block;
   width: 130px;
   height: 173px;
   object-fit: cover;
@@ -962,6 +963,15 @@ main {
 
 /* ── home dither lens ─────────────────────── */
 
+/* the photo reel's incoming picture, clipped in behind the crystal line (photoreel.js) */
+.about-photo.about-photo-next {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
 .photo-dither {
   position: absolute;
   top: 1px;
@@ -1476,22 +1486,41 @@ main.m-leaving {
     height: auto;
   }
 
-  .sidebar-logo { margin-bottom: 0; }
-  .sidebar-holo { width: 44px; height: 44px; margin-left: 0; }
+  .sidebar { gap: 1rem; padding: 0.85rem 0 0.85rem 1.25rem; }
+  .sidebar-logo { margin-bottom: 0; flex: none; }
+  .sidebar-holo { width: 40px; height: 40px; margin-left: 0; }
   .player-base, .player-arm, .record-label { display: none; }
 
-  .sidebar-nav { flex: none; }
-  .sidebar-nav ul { display: flex; gap: 1.25rem; }
-  .sidebar-nav li { margin-bottom: 0; }
+  /* the links don't fit across a phone: one row that scrolls sideways, fading out at the edges */
+  .sidebar-nav {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 0.75rem, #000 calc(100% - 2rem), transparent);
+            mask-image: linear-gradient(to right, transparent 0, #000 0.75rem, #000 calc(100% - 2rem), transparent);
+  }
+  .sidebar-nav::-webkit-scrollbar { display: none; }
+  .sidebar-nav ul { display: flex; align-items: center; gap: 1.1rem; padding: 0.4rem 2rem 0.4rem 0.75rem; }
+  .sidebar-nav li { margin-bottom: 0; flex: none; }
   .nav-gap { display: none; }
+  /* the theme switch stays (at the end of the row); the crystals toggle and the ⌘K hint don't */
+  .crystals-toggle { display: none; }
 
   main { margin-left: 0; padding: 2rem 1.25rem 3rem; }
 
-
   .about-photo-wrap { float: none; display: inline-block; margin: 0 0 1.25rem; }
 
+  /* dates sit on one line above the role */
   .exp-item { grid-template-columns: 1fr; gap: 0.1rem; }
+  .exp-date br { display: none; }
 
-  .theme-toggle, .crystals-toggle { display: none; }
+  /* tighter rhythm between sections */
+  .landing-section + .landing-section { margin-top: 3.75rem; }
+  .page-label { margin-bottom: 1.5rem; }
 
+  /* gallery: two across, the 100% card across both; hide the empty placeholder tiles */
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .gallery-item:has(img[src=""]) { display: none; }
+  .holo-controls { gap: 0.6rem; }
 }
