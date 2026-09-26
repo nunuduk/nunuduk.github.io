@@ -197,6 +197,7 @@
     'uniform sampler2D uGlowTex;', // the mask blurred at a few radii (alpha), for the rim of the glow
     'uniform sampler2D uRayTex;',  // light shafts baked from the mask (r), see RAY_FRAG
     'uniform float uGlow;',    // glow strength (0 = none)
+    'uniform float uHollow;',  // 1: draw only the light around the mask, nothing inside (something else sits there)
     'uniform sampler2D uEdgeTex;', // per direction from the centre: how far out the letters reach (r, canvas heights)
     'out vec4 outColor;',
     HOLO_LIB,
@@ -290,7 +291,7 @@
     '  vec4 content = texture(uTex, px / uRes);',
     '  gLoop = uLoop;', // makes the shimmer itself periodic (see loop support above)
     '  vec4 amb = uGlow > 0.0 ? ambience(px, uTime) * (1.0 - content.a) : vec4(0.0);', // letters sit over it
-    '  if (content.a <= 0.0 && amb.a <= 0.002) { outColor = vec4(0.0); return; }',
+    '  if (uHollow > 0.5 || (content.a <= 0.0 && amb.a <= 0.002)) { outColor = amb; return; }',
     // record mode: a pastel purple label with a spindle hole, and the shimmer turning around it
     '  vec2 ctr = uRes * 0.5; vec2 rel = px - ctr;',
     '  float rr = length(rel) / (min(uRes.x, uRes.y) * 0.5);',
@@ -411,7 +412,8 @@
       glowTex: gl.getUniformLocation(prog, 'uGlowTex'),
       rayTex: gl.getUniformLocation(prog, 'uRayTex'),
       glow: gl.getUniformLocation(prog, 'uGlow'),
-      edgeTex: gl.getUniformLocation(prog, 'uEdgeTex')
+      edgeTex: gl.getUniformLocation(prog, 'uEdgeTex'),
+      hollow: gl.getUniformLocation(prog, 'uHollow')
     };
 
     var tex = gl.createTexture();
@@ -597,6 +599,7 @@
       gl.uniform1f(U.spin, (opts.spinRpm || 0) * Math.PI * 2 / 60);
       gl.uniform1f(U.label, opts.label || 0);
       gl.uniform1f(U.glow, opts.glow || 0);
+      gl.uniform1f(U.hollow, opts.hollow ? 1 : 0);
       gl.uniform2f(U.res, canvas.width, canvas.height);
       gl.uniform1f(U.time, t);
       gl.uniform1f(U.shard, opts.shard * dpr);
@@ -627,6 +630,14 @@
         raf = 0;
       },
       resize: function () { resize(); draw(performance.now()); },
+      // lose the GL context (for renderers that are thrown away)
+      dispose: function () {
+        running = false;
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        var lose = gl.getExtension('WEBGL_lose_context');
+        if (lose) lose.loseContext();
+      },
       // pointer position in CSS px relative to the canvas
       pointer: function (x, y) {
         if (L.tz === 0) { L.x = x; L.y = y; }
