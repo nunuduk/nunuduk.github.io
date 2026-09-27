@@ -216,15 +216,22 @@
     // u = direction in turns (turned by rot), r = distance from the centre (canvas heights). Each stroke reads
     // where the letters end and their colour at its own centre line, so it's never cut where those jump.
     // w/l/o = width, length and opacity ranges; soft = edge feather as a share of the width; even = 0 for a
-    // spindle that tapers at both ends, 1 for an even shaft; dens = chance a slot is filled; boil = drawing.
+    // spindle that tapers at both ends, 1 for an even shaft; dens = chance a slot is filled (negative: gathered in clumps); boil = drawing.
     'vec4 strokes(float u, float rot, float r, float n, float seed, vec2 w, vec2 l, vec2 o,',
     '             float soft, float even, float dens, float boil, float hueShift, float t, float px1) {',
     '  vec4 acc = vec4(0.0);',
     '  float x = u * n, slot = floor(x);',
-    '  for (int k = -2; k <= 2; k++) {', // wide strokes near the centre reach past the next slot
+    '  for (int k = -3; k <= 3; k++) {', // wide, soft strokes near the frame reach well past the next slot
     '    float id = slot + float(k);',
     '    float s = mod(id, n / 3.0);', // the pattern repeats three times round the circle (see ambience)
-    '    if (hash1(vec2(s, seed)) > dens) continue;',
+    // dens < 0 means clumped: the chance comes from where this slot points, decided once for the whole
+    // stroke (checking it per pixel would slice a stroke lengthwise wherever the clumping changed)
+    '    float dn = dens;',
+    '    if (dn < 0.0) {',
+    '      float thc = (id + 0.5) / n * TAU * 3.0;', // repeats every third of a circle, like the pattern
+    '      dn = -dn * smoothstep(0.35, 0.7, vnoise(vec2(cos(thc), sin(thc)) * 1.2 + 5.0));',
+    '    }',
+    '    if (hash1(vec2(s, seed)) > dn) continue;',
     '    float jit = hash1(vec2(s, seed + 11.0 + boil)) - 0.5;', // this drawing\'s wobble
     '    float c = id + 0.5 + (hash1(vec2(s, seed + 1.7)) - 0.5) * 0.9 + jit * 0.1;',
     '    float cu = c / n + rot;', // the stroke\'s centre line, in turns
@@ -235,16 +242,20 @@
     '    float tt = (r - r0) / len;',
     '    if (tt <= 0.0 || tt >= 1.0) continue;',
     '    float body = sin(3.14159 * tt);',
-    '    float width = mix(w.x, w.y, hash1(vec2(s, seed + 7.9))) * (1.0 + 0.2 * jit) * mix(pow(body, 0.8), 1.0, even);',
+    '    float baseW = mix(w.x, w.y, hash1(vec2(s, seed + 7.9))) * (1.0 + 0.2 * jit);',
+    '    float width = baseW * mix(pow(body, 0.8), 1.0, even);', // tapers toward the ends
     '    float lateral = abs(x - c) / n * TAU * r;', // distance across the stroke, canvas heights
-    '    float edge = max(px1, soft * width);',
+    // the edge's softness follows the stroke's full width, not the tapered one, so the thin ends fade out
+    // instead of sharpening into hairlines; in the viewer it's softer still, never under ~6 device px
+    '    float edge = uHollow > 0.5 ? max(px1 * 6.0, soft * baseW * 1.8) : max(px1, soft * width);',
     '    float cov = 1.0 - smoothstep(width - edge, width + edge, lateral);',
     '    if (cov <= 0.0) continue;',
     '    float a = mix(o.x, o.y, hash1(vec2(s, seed + 13.0))) * (1.0 + 0.25 * jit) * cov;',
     '    a *= mix(1.0, 0.35, smoothstep(0.0, 0.4, r - rEdge));', // strongest where it leaves the letters
     '    a *= mix(pow(body, 0.6), smoothstep(0.0, 0.2, tt) * (1.0 - smoothstep(0.45, 1.0, tt)), even);',
     '    vec2 cd = vec2(cos(cu * TAU), sin(cu * TAU));',
-    '    float hue = hueAt(uRes * 0.5 + cd * rEdge * uRes.y, t) + hueShift + (hash1(vec2(s, seed + 17.0)) - 0.5) * 0.35;',
+    '    float hue = (uHollow > 0.5 ? cu + t * 0.03 : hueAt(uRes * 0.5 + cd * rEdge * uRes.y, t))',
+    '              + hueShift + (hash1(vec2(s, seed + 17.0)) - 0.5) * 0.35;',
     '    vec3 col = holo(hue);',
     '    col = mix(vec3(dot(col, vec3(0.299, 0.587, 0.114))), col, 0.75);', // the film\'s light is a little dusty
     '    col = mix(col, vec3(0.9, 0.94, 1.0), 0.15 + 0.5 * hash1(vec2(s, seed + 19.0)));',
@@ -260,23 +271,31 @@
     '  vec2 d = rel / max(length(rel), 1.0);',
     '  float u = atan(d.y, d.x) / TAU;',
     '  float aa = 1.0 / uRes.y;',
-    '  float rim = texture(uGlowTex, px / uRes).a * 0.6;',
-    '  vec4 acc = vec4(holo(hueAt(px, t)) * rim, rim);',
+    // In the viewer (hollow) the light is coloured by direction, one turn of the rainbow around the frame,
+    // drifting slowly: it reads as radiating outward instead of as the title's diagonal bands laid over a
+    // rectangle. The rim, which traces the frame's shape, drops to a trace there.
+    '  float hueHere = uHollow > 0.5 ? u + t * 0.03 : hueAt(px, t);',
+    '  float rim = texture(uGlowTex, px / uRes).a * (uHollow > 0.5 ? 0.12 : 0.6);',
+    '  vec4 acc = vec4(holo(hueHere) * rim, rim);',
     '  float boil = mod(floor(t * 8.0), 3.0);', // 8 drawings a second, cycling three (on threes)
     // The strokes turn with the sweep. To loop seamlessly they turn a third of a circle per loop, and the
     // pattern repeats every third of a circle (slot counts divisible by 3); the letters' outline, colours and
     // haze don't turn, so the repeat doesn't read.
     '  float rot = gLoop > 0.0 ? t / (gLoop * 3.0) : t * 0.04;',
     '  float ur = u - rot;',
-    '  float th = ur * TAU * 3.0;',
-    '  float clump = smoothstep(0.35, 0.7, vnoise(vec2(cos(th), sin(th)) * 1.2 + 5.0));', // streaks gather in a few places
     '  float haze = texture(uRayTex, px / uRes).r * 0.35;',
-    '  vec4 L = vec4(holo(hueAt(px, t) + 0.05) * haze, haze);',
+    // viewer: break the haze into broad beams turning slowly, so it fans out instead of forming a halo
+    '  if (uHollow > 0.5) {',
+    '    vec2 dr = vec2(cos(ur * TAU), sin(ur * TAU));',
+    '    float beams = 0.6 * vnoise(dr * 2.6 + 9.0) + 0.4 * vnoise(dr * 6.0 + 2.0);',
+    '    haze *= 0.2 + 1.1 * smoothstep(0.3, 0.75, beams);',
+    '  }',
+    '  vec4 L = vec4(holo(hueHere + 0.05) * haze, haze);',
     '  vec4 S;',
     // broad pale shafts, then a scatter of soft streaks
     '  S = strokes(ur, rot, r, 15.0, 3.0, vec2(0.03, 0.1), vec2(0.4, 0.9), vec2(0.14, 0.38), 0.4, 1.0, 0.6, boil, 0.1, t, aa);',
     '  L = S + L * (1.0 - S.a);',
-    '  S = strokes(ur, rot, r, 72.0, 21.0, vec2(0.005, 0.014), vec2(0.1, 0.35), vec2(0.15, 0.45), 0.9, 0.0, 0.3 * clump, boil, 0.0, t, aa);',
+    '  S = strokes(ur, rot, r, 72.0, 21.0, vec2(0.005, 0.014), vec2(0.1, 0.35), vec2(0.15, 0.45), 0.9, 0.0, -0.3, boil, 0.0, t, aa);', // -: gathered in clumps
     '  L = S + L * (1.0 - S.a);',
     // fade out before the card's border, so the light never ends in a hard line
     // (a wide, gentle fade at the sides where there's room; a shorter one above and below the title)
@@ -325,6 +344,7 @@
     'uniform vec2 uRes;',     // bake size
     'uniform float uLen;',    // how far the light carries, as a fraction of the height
     'uniform float uSoft;',   // mip level of the mask to walk through (softer = broader beams)
+    'uniform float uSpread;', // angle between the walks (radians); >0 averages five walks fanned around the direction
     'out vec4 outColor;',
     'void main() {',
     '  vec2 uv = gl_FragCoord.xy / uRes;',
@@ -333,15 +353,26 @@
     '  vec2 toC = c - p; float dc = length(toC);',
     '  vec2 dir = toC / max(dc, 1e-4);',
     '  float reach = min(dc, 3.0 * uLen);',
-    '  const int N = 64;',
+    '  const int N = 40;',
     '  float j = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));', // dither the steps
-    '  float acc = 0.0;',
-    '  for (int i = 0; i < N; i++) {',
-    '    float x = (float(i) + j) / float(N) * reach;',
-    '    vec2 s = p + dir * x;',
-    '    acc += textureLod(uMask, vec2(s.x / asp, s.y), uSoft).a * exp(-x / uLen);',
+    // with a spread, walk a small fan of directions and average: a corner then casts a beam whose edge
+    // softens with distance, instead of a razor-straight shadow line out from the centre
+    '  int F = uSpread > 0.0 ? 2 : 0;',
+    '  float acc = 0.0, walks = 0.0;',
+    '  for (int f = -2; f <= 2; f++) {',
+    '    if (f < -F || f > F) continue;',
+    // each pixel shifts its fan by its own fraction of a step, so the five walks blend into a smooth
+    // gradient instead of five fainter hard edges
+    '    float an = (float(f) + fract(j * 7.31 + float(f) * 0.618) - 0.5) * uSpread;',
+    '    vec2 dr = vec2(dir.x * cos(an) - dir.y * sin(an), dir.x * sin(an) + dir.y * cos(an));',
+    '    for (int i = 0; i < N; i++) {',
+    '      float x = (float(i) + j) / float(N) * reach;',
+    '      vec2 s = p + dr * x;',
+    '      acc += textureLod(uMask, vec2(s.x / asp, s.y), uSoft).a * exp(-x / uLen);',
+    '    }',
+    '    walks += 1.0;',
     '  }',
-    '  outColor = vec4(clamp(acc * reach / (float(N) * uLen), 0.0, 1.0), 0.0, 0.0, 1.0);',
+    '  outColor = vec4(clamp(acc * reach / (float(N) * uLen * walks), 0.0, 1.0), 0.0, 0.0, 1.0);',
     '}'
   ].join('\n');
 
@@ -524,6 +555,8 @@
       gl.uniform1f(gl.getUniformLocation(rayProg, 'uLen'), 0.2);
       // soften the mask to about 1% of the height, whatever the resolution, so beams stay broad
       gl.uniform1f(gl.getUniformLocation(rayProg, 'uSoft'), Math.max(0, Math.log2(h * 0.012)));
+      // the gallery viewer's frame is a rectangle: fan the walks (about ±9°) so its corners don't cast hard lines
+      gl.uniform1f(gl.getUniformLocation(rayProg, 'uSpread'), opts.hollow ? 0.08 : 0);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       gl.useProgram(prog);

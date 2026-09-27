@@ -35,9 +35,9 @@
     '<nav class="sidebar-nav">' +
     '<ul>' +
     '<li><a href="index.html">about</a></li>' +
+    '<li><a href="index.html#publications">publications</a></li>' +
     '<li><a href="index.html#projects">projects</a></li>' +
     '<li><a href="index.html#gallery">gallery</a></li>' +
-    '<li><a href="index.html#publications">publications</a></li>' +
     '<li><a href="contact.html">contact</a></li>' +
     '<li><a href="waveform.html">waveform</a></li>' +
     '<li><a href="resume.html">resume</a></li>' +
