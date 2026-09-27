@@ -7,6 +7,11 @@
   <script>(function(){var p=document.location.pathname;var d=p.replace(/\/[^/]*$/,'/')||'/';var b=document.createElement('base');b.href=d;document.head.insertBefore(b,document.head.firstChild);})();</script>
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Inter: fetched alongside the stylesheet and applied when it arrives, so it never holds up the scripts
+       (and the landing sweep) the way an @import inside style.css did -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
   <script>try{!location.hash&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&document.documentElement.classList.add('m-cover')}catch(e){}</script>
   <meta name="description" content="Nguyen Nguyen — EE researcher and VCD designer. Ph.D. ECE student at the University of Michigan.">
@@ -77,16 +82,6 @@
 
     <span class="sec-label">Experience.</span>
     <div class="exp-grid">
-    <div class="exp-item">
-      <div class="exp-date">Fall 2026 — <br>present</div>
-      <div>
-        <div class="exp-role">Ph.D. Researcher</div>
-        <div class="exp-org">University of Michigan</div>
-        <ul class="exp-bullets">
-          <li>Fast and accurate power feedback throughout the hardware design process.</li>
-        </ul>
-      </div>
-    </div>
     <div class="exp-item">
       <div class="exp-date">May 2025 — <br>May 2026</div>
       <div>
@@ -233,6 +228,7 @@
   <script src="js/holo.js"></script>
   <script src="js/lightbox.js"></script>
   <script src="js/palette.js"></script>
+  <script src="js/sfx.js"></script>
   <script src="js/motion.js"></script>
   <script src="js/spa.js"></script>
 </body>

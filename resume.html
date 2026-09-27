@@ -7,6 +7,11 @@
   <script>(function(){var p=document.location.pathname;var d=p.replace(/\/[^/]*$/,'/')||'/';var b=document.createElement('base');b.href=d;document.head.insertBefore(b,document.head.firstChild);})();</script>
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Inter: fetched alongside the stylesheet and applied when it arrives, so it never holds up the scripts
+       (and the landing sweep) the way an @import inside style.css did -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
   <meta name="description" content="Resume of Nguyen Nguyen — EE researcher, IC designer, VCD student at Notre Dame.">
   <meta property="og:title" content="Resume — Nguyen Nguyen">
@@ -56,17 +61,6 @@
 
       <section class="resume-section">
         <h2>Research</h2>
-
-        <div class="resume-entry">
-          <div class="resume-entry-header">
-            <span class="resume-entry-title">Power Feedback in the Hardware Design Process</span>
-            <span class="resume-entry-date">Fall 2026 — Present</span>
-          </div>
-          <div class="resume-entry-sub">University of Michigan · Ph.D. Research</div>
-          <ul class="resume-bullets">
-            <li>Working on fast and accurate power feedback throughout the hardware design process</li>
-          </ul>
-        </div>
 
         <div class="resume-entry">
           <div class="resume-entry-header">
@@ -164,6 +158,7 @@
   <script src="js/ritsu100.js"></script>
   <script src="js/holo.js"></script>
   <script src="js/palette.js"></script>
+  <script src="js/sfx.js"></script>
   <script src="js/motion.js"></script>
   <script src="js/spa.js"></script>
 </body>

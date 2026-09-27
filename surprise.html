@@ -7,6 +7,11 @@
   <script>(function(){var p=document.location.pathname;var d=p.replace(/\/[^/]*$/,'/')||'/';var b=document.createElement('base');b.href=d;document.head.insertBefore(b,document.head.firstChild);})();</script>
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Inter: fetched alongside the stylesheet and applied when it arrives, so it never holds up the scripts
+       (and the landing sweep) the way an @import inside style.css did -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
   <script>!function(){var t=localStorage.getItem('theme');t&&document.documentElement.setAttribute('data-theme',t)}();</script>
 </head>
 <body class="page-surprise">
@@ -41,6 +46,7 @@
   <script src="js/ritsu100.js"></script>
   <script src="js/holo.js"></script>
   <script src="js/palette.js"></script>
+  <script src="js/sfx.js"></script>
   <script src="js/motion.js"></script>
   <script src="js/spa.js"></script>
 

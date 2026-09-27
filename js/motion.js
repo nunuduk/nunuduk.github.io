@@ -713,6 +713,7 @@
     vt.ready.then(function () {
       // keeps the transition open for DUR; the actual movement is driven by place() below
       html.animate({ opacity: [1, 1] }, { duration: DUR, pseudoElement: '::view-transition-new(root)' });
+      if (window.sfx) window.sfx.crystalSweep(DUR, next); // the glass rings out with the band (sfx.js)
       t0 = performance.now();
       (function tick(now) {
         var k = Math.min(1, (now - t0) / DUR);
@@ -740,8 +741,12 @@
     if (typeof original !== 'function' || original.__motion) return;
     var wrapped = function () {
       if (themeBusy) return;
-      if (reduce || document.hidden || !document.startViewTransition || !window.HOLO_LIB) return original();
       var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (window.sfx) window.sfx.prime(); // wake the audio inside the click, where browsers allow it
+      if (reduce || document.hidden || !document.startViewTransition || !window.HOLO_LIB) {
+        if (window.sfx) window.sfx.crystalSweep(700, next); // no sweep to follow: a shorter sound
+        return original();
+      }
       lineTheme(original, next);
     };
     wrapped.__motion = true;
@@ -767,6 +772,8 @@
     var covered = html.classList.contains('m-cover'); // set in index.html's <head> before first paint
     if (!main || reduce || document.hidden) { html.classList.remove('m-cover'); return; }
     if (covered && main.classList.contains('landing')) {
+      // the glass sound with it, if the browser allows sound before a click (sfx.js)
+      if (window.sfx) window.sfx.landing(1300, html.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
       sweepReveal({ onCovered: function () { html.classList.remove('m-cover'); } })
         .then(function () { html.classList.remove('m-cover'); });
       enter(main, 0);

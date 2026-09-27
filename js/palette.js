@@ -29,6 +29,9 @@
       if (window.crystals) toast(window.crystals.toggle() ? 'crystals on' : 'crystals off');
     } },
     { label: 'toggle theme', hint: 'light / dark', run: function () { window.toggleTheme && window.toggleTheme(); } },
+    { label: 'toggle sound', hint: 'theme switch sound on / off', run: function () {
+      if (window.sfx) toast(window.sfx.toggle() ? 'sound on' : 'sound off');
+    } },
     { label: 'copy email', hint: EMAIL, run: function () {
       var done = function () { toast('copied ' + EMAIL); };
       if (navigator.clipboard) navigator.clipboard.writeText(EMAIL).then(done, function () { toast(EMAIL); });

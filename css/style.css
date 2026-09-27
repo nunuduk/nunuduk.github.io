@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
-
 @font-face {
   font-family: 'Athens Classic';
   src: url('../assets/fonts/AthensClassic.ttf') format('truetype');
@@ -1540,7 +1538,7 @@ html.m-cover body::after {
   inset: 0;
   z-index: 999;
   background: var(--bg);
-  animation: m-cover-failsafe 0s linear 3s forwards; /* never leave the page blank if the script fails */
+  animation: m-cover-failsafe 0s linear 4.5s forwards; /* never leave the page blank if the script fails or is slow */
 }
 @keyframes m-cover-failsafe { to { visibility: hidden; } }
 /* the sweep's canvas when it's drawn inside an element (the waveform chart) */

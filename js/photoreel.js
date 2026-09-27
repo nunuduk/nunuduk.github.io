@@ -65,6 +65,7 @@
         over.style.clipPath = 'polygon(0 0, 0 0, 0 100%, 0 100%)';
         wrap.appendChild(over);
 
+        if (window.sfx) window.sfx.photoTick(); // a quick, muffled sparkle of the theme switch's glass
         var sweep = window.motion && window.motion.sweepReveal;
         var run = sweep ? sweep({
           el: wrap, dur: 1100, band: 28, cell: 10, curtain: false, keep: true,
