@@ -89,7 +89,7 @@ main { position: relative; z-index: 1; }
 
 .sidebar-logo {
   display: block;
-  margin-bottom: 4.25rem; /* clear the turntable */
+  margin-bottom: 2.4rem; /* clear the turntable (its plinth hangs 1.5rem below the record) */
 }
 .sidebar-logo img {
   display: block;
@@ -148,8 +148,9 @@ main { position: relative; z-index: 1; }
   animation: record-spin 10s linear infinite; /* 6 rpm, the same as the shimmer */
 }
 .record-label text {
-  font-family: 'Athens Classic', 'Inter', sans-serif;
-  font-size: 8px;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 7px;
+  font-weight: 500;
   fill: #4f3f86;
 }
 @keyframes record-spin { to { transform: rotate(360deg); } }
@@ -234,6 +235,240 @@ html[data-theme="dark"] body.page-surprise .sidebar-logo .logo-dark {
   text-align: left;
 }
 .crystals-toggle:hover { color: var(--accent); }
+
+/* ── music (music.js): the turntable's player, under the plinth ── */
+
+/* spans the record's left edge to the plinth's right edge */
+.music {
+  position: relative;
+  width: 10.15rem;
+  margin: 0 0 2.2rem -1.6rem;
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+.mu-now {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.mu-cover {
+  flex: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  object-fit: cover;
+  background: var(--surface);
+  outline: 1px solid var(--border-mid);
+  outline-offset: -1px;
+}
+.mu-meta { flex: 1; min-width: 0; }
+
+/* title and artist: one line each; too long and they slide past (music.js sets the distance and time) */
+.mu-line {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.mu-line.is-sliding {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 0.35rem, #000 calc(100% - 0.6rem), transparent);
+          mask-image: linear-gradient(to right, transparent 0, #000 0.35rem, #000 calc(100% - 0.6rem), transparent);
+}
+.mu-run { display: inline-block; }
+.mu-run > span + span { margin-left: var(--mu-gap); }
+.is-sliding .mu-run { animation: mu-slide var(--mu-time) linear infinite; }
+@keyframes mu-slide {
+  0%, 18% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(var(--mu-shift), 0, 0); }
+}
+.mu-title { font-size: 0.7rem; }
+.mu-artist { color: var(--text-dim); }
+
+.mu-ctrl { flex: none; display: flex; align-items: center; margin-right: -0.3rem; }
+.mu-btn {
+  display: grid;
+  place-items: center;
+  width: 1.2rem;
+  height: 1.4rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: color 200ms ease, transform 200ms var(--ease-out);
+}
+.mu-btn svg { width: 0.5rem; height: 0.5rem; fill: currentColor; }
+.mu-play { width: 1.5rem; height: 1.6rem; }
+.mu-play svg { width: 0.7rem; height: 0.7rem; }
+.mu-btn:hover { color: var(--accent); }
+.mu-btn:active { transform: scale(0.88); }
+
+/* progress: a hairline that thickens under the pointer */
+.mu-bar {
+  position: relative;
+  display: block;
+  height: 0.75rem;
+  cursor: pointer;
+  touch-action: none;
+}
+.mu-bar::before,
+.mu-fill {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--border-mid);
+  transition: height 160ms ease, margin 160ms ease;
+}
+.mu-fill {
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.mu-bar:hover::before, .mu-bar:hover .mu-fill,
+.mu-bar.is-drag::before, .mu-bar.is-drag .mu-fill { height: 3px; margin-top: -1px; }
+.mu-bar:focus-visible { outline: 1px dotted var(--accent); outline-offset: 1px; }
+.mu-seek { margin-top: 0.3rem; }
+
+.mu-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--text-pale);
+  font-size: 0.58rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.mu-foot > * { flex: none; }
+.mu-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.mu-toggle:hover, .music.is-open .mu-toggle { color: var(--accent); }
+.mu-count { color: var(--text-faint); margin-left: 0.1rem; }
+.mu-chev {
+  display: inline-block;
+  width: 0.28rem;
+  height: 0.28rem;
+  margin: 0 0 0.12rem 0.3rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 260ms var(--ease-out), margin 260ms var(--ease-out);
+}
+.music.is-open .mu-chev { transform: rotate(-135deg); margin-bottom: -0.05rem; }
+
+/* volume: a speaker (mute) and a short hairline slider, between the playlist toggle and the time */
+.mu-vol {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  align-self: center;
+  margin: 0 0.35rem 0 auto;
+}
+.mu-mute {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-pale);
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.mu-mute:hover { color: var(--accent); }
+.mu-mute svg { width: 0.62rem; height: 0.52rem; overflow: visible; }
+.mu-spk { fill: currentColor; }
+.mu-wave { fill: none; stroke: currentColor; stroke-width: 1; stroke-linecap: round; transition: opacity 160ms ease; }
+.music.is-muted .mu-wave { opacity: 0; }
+.mu-level { width: 1.7rem; }
+
+/* the playlist folds open below; it scrolls inside itself, and only as tall as the window allows */
+.mu-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms var(--ease-out);
+}
+.music.is-open .mu-drawer { grid-template-rows: 1fr; }
+.mu-drawer-in { min-height: 0; overflow: hidden; }
+.mu-list {
+  position: relative; /* rows measure their offsetTop from here */
+  max-height: clamp(6.5rem, calc(100vh - 36rem), 12rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  counter-reset: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--deco) transparent;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 0.4rem, #000 calc(100% - 0.8rem), transparent);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 0.4rem, #000 calc(100% - 0.8rem), transparent);
+}
+.mu-list { margin-top: 0.25rem; }
+.mu-list::-webkit-scrollbar { width: 3px; }
+.mu-list::-webkit-scrollbar-thumb { background: var(--deco); }
+.mu-list button {
+  display: grid;
+  grid-template-columns: 1.25rem minmax(0, 1fr);
+  width: 100%;
+  padding: 0.28rem 0.2rem 0.28rem 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+.mu-n {
+  grid-row: span 2;
+  color: var(--text-faint);
+  font-size: 0.6rem;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.1rem;
+}
+.mu-lt, .mu-la { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mu-la { color: var(--text-pale); font-size: 0.64rem; }
+/* the music's credit, under the list */
+.mu-credit {
+  margin: 0.45rem 0 0.1rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--border-mid);
+  font-size: 0.55rem;
+  line-height: 1.45;
+  color: var(--text-pale);
+}
+.mu-credit a { color: var(--text-dim); transition: color 200ms ease; }
+.mu-credit a:hover { color: var(--accent); }
+.mu-list button:hover .mu-lt { color: var(--accent); }
+.mu-list .is-current .mu-lt,
+.mu-list .is-current .mu-n { color: var(--accent); }
+
+/* the YouTube player that actually plays: present, but out of sight and out of the way */
+.mu-embed {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  height: 200px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* the turntable's power light glows while a song plays */
+.music-on .pl-led { animation: pl-led 2.4s ease-in-out infinite; }
+@keyframes pl-led { 50% { opacity: 0.35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-sliding .mu-run, .music-on .pl-led { animation: none; }
+  .mu-drawer, .mu-chev { transition: none; }
+}
 
 /* ── main ─────────────────────────────────── */
 
@@ -1630,6 +1865,7 @@ main.m-leaving {
   .sidebar-logo { margin-bottom: 0; flex: none; }
   .sidebar-holo { width: 40px; height: 40px; margin-left: 0; }
   .player-base, .player-arm, .record-label { display: none; }
+  .music { display: none; }
 
   /* the links don't fit across a phone: one row that scrolls sideways, fading out at the edges */
   .sidebar-nav {

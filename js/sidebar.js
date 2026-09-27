@@ -19,7 +19,9 @@
     // the name, curved around the inside edge of the label, turning with the record
     '<svg class="record-label" viewBox="-75 -75 150 150" aria-hidden="true">' +
     '<defs><path id="record-arc" d="M 0,-24.5 A 24.5,24.5 0 1,1 -0.01,-24.5"/></defs>' +
-    '<text><textPath href="#record-arc" textLength="152" lengthAdjust="spacing">NGUYEN NGUYEN \u2022</textPath></text>' +
+    // the arc is 154 around: the name takes 134 of it and the dot sits centred in the gap before it starts again
+    '<text><textPath href="#record-arc" textLength="134" lengthAdjust="spacing">NGUYEN NGUYEN</textPath></text>' +
+    '<text><textPath href="#record-arc" startOffset="144.5" text-anchor="middle">\u2022</textPath></text>' +
     '</svg>' +
     '<svg class="player-arm" viewBox="-160 -110 280 220" aria-hidden="true">' +
     '<line class="pl-arm" x1="80" y1="-80" x2="60" y2="-18"/>' +
