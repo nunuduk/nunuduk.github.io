@@ -1084,46 +1084,6 @@ main {
   transform: translateY(0);
 }
 
-/* ── surprise ─────────────────────────────── */
-
-.surprise-intro {
-  font-size: 0.79rem;
-  font-weight: 300;
-  color: var(--text-pale);
-  font-style: italic;
-  margin-bottom: 2rem;
-}
-
-.surprise-fact {
-  font-size: 1rem;
-  font-weight: 300;
-  color: var(--text);
-  line-height: 1.6;
-  max-width: 400px;
-  margin-bottom: 2rem;
-  min-height: 1.6em;
-}
-
-.surprise-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 0.71rem;
-}
-
-.surprise-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.71rem;
-  color: var(--text);
-  font-weight: 400;
-}
-
-.surprise-btn:hover { color: var(--accent); }
-
 /* ── ritsu shimmer (holo.js) ──────────────── */
 
 /* the banner's background lives on this frame, not the canvas, so during the theme sweep the frame
@@ -1820,11 +1780,11 @@ main.m-leaving {
 .sidebar-nav a:hover { transform: translate3d(3px, 0, 0); }
 
 /* inline links: underline draws in from the left and leaves to the right */
-.bio a, .resume-contact a, .c-val a, .surprise-controls a {
+.bio a, .resume-contact a, .c-val a {
   background: linear-gradient(currentColor, currentColor) no-repeat 100% 100% / 0 1px;
   transition: background-size 380ms var(--ease-out), color 200ms ease;
 }
-.bio a:hover, .resume-contact a:hover, .c-val a:hover, .surprise-controls a:hover {
+.bio a:hover, .resume-contact a:hover, .c-val a:hover {
   background-position: 0 100%;
   background-size: 100% 1px;
 }
@@ -1865,7 +1825,6 @@ main.m-leaving {
   .sidebar-logo { margin-bottom: 0; flex: none; }
   .sidebar-holo { width: 40px; height: 40px; margin-left: 0; }
   .player-base, .player-arm, .record-label { display: none; }
-  .music { display: none; }
 
   /* the links don't fit across a phone: one row that scrolls sideways, fading out at the edges */
   .sidebar-nav {
@@ -1892,6 +1851,43 @@ main.m-leaving {
   .crystals-toggle { display: none; }
 
   main { margin-left: 0; padding: 2rem 1.25rem 3rem; }
+  /* room at the end of the page so the music bar doesn't cover the last of it */
+  main { padding-bottom: calc(7rem + env(safe-area-inset-bottom)); }
+
+  /* music: a bar pinned to the bottom of the screen; the playlist and credit unfold upward from it */
+  .music {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 30;
+    width: auto;
+    margin: 0;
+    padding: 0.7rem 1.25rem calc(0.45rem + env(safe-area-inset-bottom));
+    background: var(--bg);
+    font-size: 0.7rem;
+  }
+  .music.is-open { box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.08); }
+  .mu-now { gap: 0.7rem; }
+  .mu-cover { width: 2.5rem; height: 2.5rem; }
+  .mu-title { font-size: 0.82rem; }
+  .mu-artist { font-size: 0.7rem; }
+  .mu-ctrl { margin-right: -0.5rem; }
+  .mu-play { width: 2.6rem; height: 2.6rem; }
+  .mu-play svg { width: 0.85rem; height: 0.85rem; }
+  /* the progress line runs along the bar's top edge, and doubles as its border */
+  .mu-seek {
+    position: absolute;
+    top: -0.375rem; left: 0; right: 0;
+    margin: 0;
+  }
+  .mu-foot { margin-top: 0.35rem; font-size: 0.66rem; }
+  .mu-toggle { padding: 0.35rem 0; }
+  .mu-mute svg { width: 0.75rem; height: 0.62rem; }
+  .mu-level { width: 3rem; height: 1.6rem; }
+  .mu-list { max-height: 45vh; }
+  .mu-list button { font-size: 0.82rem; padding: 0.45rem 0; }
+  .mu-la { font-size: 0.72rem; }
+  .mu-n { font-size: 0.68rem; }
+  .mu-credit { font-size: 0.64rem; }
 
   .about-photo-wrap { float: none; display: inline-block; margin: 0 0 1.25rem; }
 

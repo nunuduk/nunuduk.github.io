@@ -18,7 +18,6 @@
     '.resume-header', '.resume-section',
     '.contact-note', '.c-row',
     '.wf-intro', '.wf', '.wf-help',
-    '.surprise-intro', '.surprise-fact', '.surprise-controls',
     '.pomodoro-phase', '.pomodoro-time', '.pomodoro-controls', '.pomodoro-presets',
     '.flappy-score-wrap', '.flappy-hint', '.flappy-canvas-wrap'
   ].join(',');

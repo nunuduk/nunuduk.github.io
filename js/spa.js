@@ -81,8 +81,6 @@
       window.initPomodoro();
     } else if (last === 'flappy.html' && typeof window.initFlappy === 'function') {
       window.initFlappy();
-    } else if (last === 'surprise.html' && typeof window.initSurprise === 'function') {
-      window.initSurprise();
     } else if (last === 'waveform.html' && typeof window.initWaveform === 'function') {
       window.initWaveform();
     }

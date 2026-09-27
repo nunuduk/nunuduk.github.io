@@ -99,22 +99,38 @@
   /* ── now playing ───────────────────────── */
 
   function setLine(line, text) {
-    var run = line.querySelector('.mu-run');
+    line.dataset.text = text;
+    line.title = text;
+    fit(line);
+  }
+
+  // too long for its box: show it twice, a gap apart, and slide one copy's width, so it loops seamlessly.
+  // Measured again whenever the box changes size (the phone bar, a rotated phone, the font arriving),
+  // so a title that fits never slides just because it was measured before the layout settled.
+  function fit(line) {
+    var run = line.querySelector('.mu-run'), text = line.dataset.text || '';
     line.classList.remove('is-sliding');
     run.textContent = text;
-    line.title = text;
-    // too long for its box: show it twice, a gap apart, and slide one copy's width, so it loops seamlessly
-    requestAnimationFrame(function () {
-      var w = run.scrollWidth, room = line.clientWidth;
-      if (w <= room + 1) return;
-      var gap = 24;
-      run.innerHTML = '<span>' + esc(text) + '</span><span aria-hidden="true">' + esc(text) + '</span>';
-      run.style.setProperty('--mu-gap', gap + 'px');
-      run.style.setProperty('--mu-shift', -(w + gap) + 'px');
-      run.style.setProperty('--mu-time', ((w + gap) / 22 + 2.4).toFixed(2) + 's'); // ~22px/s, plus a rest at the start
-      line.classList.add('is-sliding');
-    });
+    var room = line.clientWidth;
+    if (!room) return; // not laid out yet (hidden); the resize watcher will measure it once it is
+    var w = run.scrollWidth;
+    if (w <= room + 1) return;
+    var gap = 24;
+    run.innerHTML = '<span>' + esc(text) + '</span><span aria-hidden="true">' + esc(text) + '</span>';
+    run.style.setProperty('--mu-gap', gap + 'px');
+    run.style.setProperty('--mu-shift', -(w + gap) + 'px');
+    run.style.setProperty('--mu-time', ((w + gap) / 22 + 2.4).toFixed(2) + 's'); // ~22px/s, plus a rest at the start
+    line.classList.add('is-sliding');
   }
+  function refit() { fit(titleLine); fit(artistLine); }
+  var lastRoom = -1;
+  if (window.ResizeObserver) {
+    new ResizeObserver(function () {
+      var room = titleLine.clientWidth;
+      if (room !== lastRoom) { lastRoom = room; refit(); }
+    }).observe(titleLine);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
 
   function showTrack() {
     var t = tracks[index];
@@ -273,6 +289,12 @@
     else if (act === 'mute') { muted = !muted; showLevel(); }
     else if (b.dataset.i != null) go(+b.dataset.i, true);
     else if (b === toggle) openList(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  // on a phone the open playlist covers the page, so a tap anywhere else folds it away
+  var phone = window.matchMedia('(max-width: 600px)');
+  document.addEventListener('click', function (e) {
+    if (phone.matches && el.classList.contains('is-open') && !el.contains(e.target)) openList(false);
   });
 
   function openList(open) {
