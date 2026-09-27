@@ -1644,7 +1644,12 @@ main.m-leaving {
   /* a swipe that reaches the end of the row stops there instead of dragging the page sideways (iOS) */
   .sidebar-nav { overscroll-behavior-x: contain; touch-action: pan-x pan-y; }
   html, body { overflow-x: clip; overscroll-behavior-x: none; }
-  .sidebar-nav ul { display: flex; align-items: center; gap: 1.1rem; padding: 0.4rem 2rem 0.4rem 0.75rem; }
+  .sidebar-nav ul { display: flex; align-items: center; gap: 1.1rem; padding: 0.4rem 0 0.4rem 0.75rem; }
+  /* room after the last item so it scrolls fully clear of the fade (Safari ignores end padding in a
+     scrolling flex row, so it's a real spacer) */
+  .sidebar-nav ul::after { content: ''; flex: none; width: 3rem; height: 1px; }
+  /* the crystals toggle and ⌘K hint are hidden here; hide their slots too so they don't add gaps */
+  .sidebar-nav li:has(> .crystals-toggle), .sidebar-nav li:has(> .palette-open) { display: none; }
   .sidebar-nav li { margin-bottom: 0; flex: none; }
   .nav-gap { display: none; }
   /* the theme switch stays (at the end of the row); the crystals toggle and the ⌘K hint don't */

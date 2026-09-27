@@ -2,7 +2,7 @@
   /*
    * Tab icon: the sidebar record, simplified. A disc of the shimmer's rainbow sweep (no crystals), turning
    * at the record's 6 rpm while the bands drift like the shader's, with the purple label and spindle hole.
-   * Drawn on a small canvas and swapped in as the favicon a dozen times a second (browsers don't animate
+   * Drawn on a small canvas and swapped in as the favicon 24 times a second (browsers don't animate
    * GIF favicons, except Firefox). Still under reduced motion; favicon.png without JS.
    */
   var link = document.querySelector('link[rel="icon"]');
@@ -71,5 +71,5 @@
   var t0 = performance.now();
   function tick() { draw((performance.now() - t0) / 1000 + 3); }
   tick();
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(tick, 1000 / 12);
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(tick, 1000 / 24);
 })();
