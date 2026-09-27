@@ -238,11 +238,11 @@ html[data-theme="dark"] body.page-surprise .sidebar-logo .logo-dark {
 
 /* ── music (music.js): the turntable's player, under the plinth ── */
 
-/* spans the record's left edge to the plinth's right edge */
+/* centred under the record (and the visible part of the plinth) */
 .music {
   position: relative;
   width: 10.15rem;
-  margin: 0 0 2.2rem -1.6rem;
+  margin: 0 0 2.2rem -2.25rem;
   font-size: 0.62rem;
   line-height: 1.35;
   color: var(--text);
